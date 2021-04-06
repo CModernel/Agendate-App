@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/amd_inicio"
+            android:icon="@mipmap/home"
+            android:title="@string/titulo_menu_inicio" />
+
+        <item
+            android:id="@+id/amd_carga"
+            android:icon="@mipmap/carga_50"
+            android:title="@string/titulo_menu_carga" />
+
+        <item
+            android:id="@+id/amd_descarga"
+            android:icon="@mipmap/descarga_50"
+            android:title="@string/titulo_menu_descarga" />
+
+
+    </group>
+
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/amd_nav_enviarlog"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/titulo_menu_enviar_log" />
+            <item
+                android:id="@+id/amd_nav_logout"
+                android:icon="@drawable/ic_menu_logout"
+                android:title="@string/titulo_menu_cerrar_sesion" />
+        </menu>
+    </item>s
+
+</menu>

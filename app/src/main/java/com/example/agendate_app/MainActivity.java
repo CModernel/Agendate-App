@@ -1,6 +1,7 @@
 package com.example.agendate_app;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.content.SharedPreferences;
@@ -30,18 +31,22 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity {
 
     Button btn_Login;
+    Toolbar tbToolbar;
+    private int mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        _Utils.setActivity(this);
-        _Utils.setContext(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btn_Login = (Button) findViewById(R.id.btn_login);
-        btn_Login.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                _Utils.fragment(new MainFragment());
-            }
-        });
+
+        _Utils.setActivity(this);
+        _Utils.setContext(this);
+
+
+        //tbToolbar = findViewById(R.id.amb_tb_toolbar);
+        //mToolbar = R.menu.toolbar_main;
+        //setSupportActionBar(tbToolbar);
+        _Utils.fragment(new LoginFragment());
+
     }
 }

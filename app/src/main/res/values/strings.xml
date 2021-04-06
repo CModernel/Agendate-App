@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Agendate-App</string>
+    <string name="titulo_menu_inicio">Inicio</string>
+    <string name="titulo_menu_carga">Carga</string>
+    <string name="titulo_menu_descarga">Descarga</string>
+    <string name="titulo_menu_enviar_log">Enviar log</string>
+    <string name="titulo_menu_cerrar_sesion">Cerrar Sesion</string>
 </resources>
