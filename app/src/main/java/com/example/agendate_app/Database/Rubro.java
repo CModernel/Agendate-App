@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -18,97 +17,58 @@ import java.util.Map;
         "id",
         "rubroNom",
 })
-public class Variedad {
+public class Rubro {
 
     @JsonProperty("id")
     private Integer id;
-    @JsonProperty("VariedadId")
-    private String variedadId;
-    @JsonProperty("VariedadDsc")
-    private String variedadDsc;
-    @JsonProperty("VariedadModDT")
-    private String variedadModDT;
-    @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    @JsonProperty("rubroNom")
+    private String rubroNom;
 
     /**
      * No args constructor for use in serialization
      */
-    public Variedad() {
+    public Rubro() {
     }
 
     /**
-     * @param empId
-     * @param variedadDsc
-     * @param variedadId
-     * @param variedadModDT
+     * @param id
+     * @param rubroNom
      */
-    public Variedad(Integer empId, String variedadId, String variedadDsc, String variedadModDT) {
+    public Rubro(Integer id, String rubroNom) {
         super();
-        this.empId = empId;
-        this.variedadId = variedadId;
-        this.variedadDsc = variedadDsc;
-        this.variedadModDT = variedadModDT;
+        this.id = id;
+        this.rubroNom = rubroNom;
     }
 
-    @JsonProperty("EmpId")
-    public Integer getEmpId() {
-        return empId;
+    @JsonProperty("id")
+    public Integer getId() {
+        return id;
     }
 
-    @JsonProperty("EmpId")
-    public void setEmpId(Integer empId) {
-        this.empId = empId;
+    @JsonProperty("id")
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    @JsonProperty("VariedadId")
-    public String getVariedadId() {
-        return variedadId;
+    @JsonProperty("rubroNom")
+    public String getRubroNom() {
+        return rubroNom;
     }
 
-    @JsonProperty("VariedadId")
-    public void setVariedadId(String variedadId) {
-        this.variedadId = variedadId;
+    @JsonProperty("rubroNom")
+    public void setRubroNom(String rubroNom) {
+        this.rubroNom = rubroNom;
     }
 
-    @JsonProperty("VariedadDsc")
-    public String getVariedadDsc() {
-        return variedadDsc;
-    }
-
-    @JsonProperty("VariedadDsc")
-    public void setVariedadDsc(String variedadDsc) {
-        this.variedadDsc = variedadDsc;
-    }
-
-    @JsonProperty("VariedadModDT")
-    public String getVariedadModDT() {
-        return variedadModDT;
-    }
-
-    @JsonProperty("VariedadModDT")
-    public void setVariedadModDT(String variedadModDT) {
-        this.variedadModDT = variedadModDT;
-    }
 
     @Override
     public String toString() {
-        return variedadDsc;
-    }
-
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
-
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
+        return rubroNom;
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(empId).append(variedadId).append(variedadDsc).append(variedadModDT).append(additionalProperties).toHashCode();
+        return new HashCodeBuilder().append(id).append(rubroNom).toHashCode();
     }
 
     @Override
@@ -116,11 +76,11 @@ public class Variedad {
         if (other == this) {
             return true;
         }
-        if (!(other instanceof Variedad)) {
+        if (!(other instanceof Rubro)) {
             return false;
         }
-        Variedad rhs = ((Variedad) other);
-        return new EqualsBuilder().append(empId, rhs.empId).append(variedadId, rhs.variedadId).append(variedadDsc, rhs.variedadDsc).append(variedadModDT, rhs.variedadModDT).append(additionalProperties, rhs.additionalProperties).isEquals();
+        Rubro rhs = ((Rubro) other);
+        return new EqualsBuilder().append(id, rhs.id).append(rubroNom, rhs.rubroNom).isEquals();
     }
 
 }

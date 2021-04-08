@@ -1,4 +1,4 @@
-package com.sd.solidatec.wms.Database;
+package com.example.agendate_app.Database;
 
 public class _SyncableGetResponse {
     public String tag;
@@ -11,8 +11,6 @@ public class _SyncableGetResponse {
     public String identificador5;
 
     public Object objeto1;
-
-    public _SDTWSRespuesta respuesta;
 
     public _SyncableGetResponse() {
     }

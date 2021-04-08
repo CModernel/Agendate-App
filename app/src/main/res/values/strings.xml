@@ -5,4 +5,7 @@
     <string name="titulo_menu_descarga">Descarga</string>
     <string name="titulo_menu_enviar_log">Enviar log</string>
     <string name="titulo_menu_cerrar_sesion">Cerrar Sesion</string>
+    <string name="mf_txt_agendar_consulta">Agendar Consulta</string>
+    <string name="mf_txt_ver_agenda">Ver Agenda</string>
+    <string name="mf_txt_mi_perfil">Mi Perfil</string>
 </resources>

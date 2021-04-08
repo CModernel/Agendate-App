@@ -1,4 +1,4 @@
-package com.example.agendate_app;
+package com.example.agendate_app.Fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.Button;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.agendate_app.Fragments.MainFragment;
+import com.example.agendate_app.R;
 import com.example.agendate_app.Utils._Utils;
 
 public class LoginFragment  extends Fragment {

@@ -6,16 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -31,22 +26,18 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.agendate_app.Database.Rubro;
 import com.example.agendate_app.MainActivity;
-import com.example.agendate_app.MainFragment;
 import com.example.agendate_app.R;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -70,8 +61,21 @@ public class _Utils {
     static String imagepath = "";
     static File file;
 
-    public static String appFolderName = Environment.getExternalStorageDirectory() + "/solidatec/pv";
+    static List<Rubro> mRubros  = new ArrayList<Rubro>();
 
+    public static List<Rubro> getmRubros() {
+        return mRubros;
+    }
+
+    public static void setmRubros(List<Rubro> mRubros) {
+        _Utils.mRubros = mRubros;
+    }
+
+    public static void addRubro(Rubro nuevoRubro){
+        _Utils.mRubros.add(nuevoRubro);
+    }
+
+    public static String appFolderName = Environment.getExternalStorageDirectory() + "/solidatec/pv";
 
     public static int getAppVersionCode() {
         try {
