@@ -8,8 +8,6 @@ import java.net.URL;
 
 public class AsyncLogin extends AsyncTask<String, Void, String> {
 
-    private Exception exception;
-
     protected String doInBackground(String... urls) {
         try {
             HttpConecction httpConecct = new HttpConecction();

@@ -25,7 +25,7 @@ public class RubroDS implements _SyncableGet {
     private SQLiteDatabase database;
     private _DBHelper dbHelper;
 
-    private String[] allVariedadesColumns = {"id", "rubroNom"};
+    private String[] allRubrosColumns = {"id", "rubroNom"};
 
     public RubroDS() {
         dbHelper = new _DBHelper(_Utils.getContext());
@@ -47,20 +47,6 @@ public class RubroDS implements _SyncableGet {
         dbHelper.close();
     }
 
-
-
-    public boolean createRubro(String json) {
-        ObjectMapper om = new ObjectMapper();
-        try {
-            createRubro((Rubro) om.readValue(json, Rubro.class));
-            return true;
-        } catch (IOException e) {
-            Log.d("RubroDS : Lin67", e.getMessage());
-            e.printStackTrace();
-            return false;
-        }
-    }
-
     // Create Rubro
     public boolean createRubro(Rubro o) {
         return createRubro(o.getId(), o.getRubroNom());
@@ -71,27 +57,28 @@ public class RubroDS implements _SyncableGet {
         ContentValues values = new ContentValues();
         values.put("id", id);
         if (rubroNom != null) values.put("rubroNom", rubroNom.trim());
+
         try {
             this.openW();
-            if (database.replace("rubroNom", null, values) >= 0) {
+            if (database.replace("Rubros", null, values) >= 0) {
                 this.close();
                 return true;
             } else {
                 this.close();
-                Log.w(RubroDS.class.getName(), "creando rubroNom: ERROR 1 - insert - " + "id = " + id + ", rubroNom = " + rubroNom.trim());
+                Log.w(RubroDS.class.getName(), "Creando Rubros: ERROR 1 - insert - " + "id = " + id + ", rubroNom = " + rubroNom.trim());
                 return false;
             }
         } catch (Exception e) {
             this.close();
-            Log.w(RubroDS.class.getName(), "creando rubroNom: ERROR 2 - insert - " + "id = " + id + ", VariedadId = " + rubroNom.trim() + " - " + e.getMessage());
+            Log.w(RubroDS.class.getName(), "Creando Rubros: ERROR 2 - insert - " + "id = " + id + ", VariedadId = " + rubroNom.trim() + " - " + e.getMessage());
             Log.d("RubroDS : Lin97", e.getMessage());
             e.printStackTrace();
             return false;
         }
     }
 
-    // Get All Variedades
-    public List<Rubro> getAllVariedades() {
+    // Get All Rubros
+    public List<Rubro> getAllRubros() {
         List<Rubro> mRubros = new ArrayList<Rubro>();
         this.openR();
 
@@ -124,7 +111,7 @@ public class RubroDS implements _SyncableGet {
         return cursorToRubro(cursor);
     }
 
-    // Cursor to Rubros
+    // Cursor to Rubro
     private Rubro cursorToRubro(Cursor cursor) {
         if (cursor.getCount() == 0) {
             return null;
@@ -132,8 +119,9 @@ public class RubroDS implements _SyncableGet {
         Rubro mRubro = new Rubro();
 
         // id, rubroNom
-        mRubro.setId(cursor.getInt(0));
-        mRubro.setRubroNom(cursor.getString(1));
+        int i = 0;
+        mRubro.setId(cursor.getInt(i++));
+        mRubro.setRubroNom(cursor.getString(i++));
         return mRubro;
     }
 
@@ -156,17 +144,14 @@ public class RubroDS implements _SyncableGet {
 
     @Override
     public boolean syncGetReturn(String tag, String out, _SyncableGetResponse sgr) {
-        Log.i("SYNCRETURN RUBRO", "Largo retorno: " + out.length());
-        // parsear json coleccion de objetos
+
         ObjectMapper om = new ObjectMapper();
         om.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
         om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        // JsonNode rJson = null; // JSON de respuesta
+
         JsonNode cJson = null; // JSON de coleccion de objetos
         JsonNode oJson = null; // JSON de objeto
         try {
-            // rJson = om.readTree(out).get("sdtWSRespuesta");
-            // parseo coleccion
             cJson = om.readTree(out);
             // si la coleccion es nula o de tamaño cero me voy
             if (cJson == null || cJson.size() == 0) {
@@ -174,12 +159,10 @@ public class RubroDS implements _SyncableGet {
                     getSyncCallback().syncGetReturn("Rubro", out, sgr);
                 return false;
             }
-            // abro db
 
             this.open();
             for (int i = 0; i < cJson.size(); i++) {
                 oJson = cJson.get(i);
-                // convertir cada objeto - String oJson
                 Rubro m;
                 try {
                     m = om.readValue(oJson.toString(), Rubro.class);

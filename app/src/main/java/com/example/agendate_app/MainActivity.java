@@ -11,10 +11,6 @@ import com.example.agendate_app.Utils._Utils;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btn_Login;
-    Toolbar tbToolbar;
-    private int mToolbar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,10 +19,6 @@ public class MainActivity extends AppCompatActivity {
         _Utils.setActivity(this);
         _Utils.setContext(this);
 
-
-        //tbToolbar = findViewById(R.id.amb_tb_toolbar);
-        //mToolbar = R.menu.toolbar_main;
-        //setSupportActionBar(tbToolbar);
         _Utils.fragment(new LoginFragment());
 
     }

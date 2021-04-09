@@ -19,7 +19,6 @@ public class _DBHelper extends SQLiteOpenHelper {
         super.finalize();
     }
 
-    // Tabla Variedades
     private static final String CREATE_Rubros = "CREATE TABLE Rubros (" +
             "id INTEGER NOT NULL, " +
             "rubroNom TEXT, " +
@@ -33,16 +32,11 @@ public class _DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.w(_DBHelper.class.getName(), "Actualizando version de la base de datos de " + oldVersion + " a " + newVersion + ", el cual va a destruir los datos anteriores.");
-        db.execSQL("DROP TABLE IF EXISTS Rubros;");
+                db.execSQL("DROP TABLE IF EXISTS Rubros;");
         onCreate(db);
     }
 
     public void truncate(SQLiteDatabase db) {
-        Log.w(_DBHelper.class.getName(), "Vaciando tablas...");
         db.execSQL("DELETE FROM Rubros;");
-
-        // borro sesion
-        //_Sesion.truncate();
     }
 }
