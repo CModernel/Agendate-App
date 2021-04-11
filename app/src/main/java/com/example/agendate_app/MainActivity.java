@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import com.example.agendate_app.Fragments.LoginFragment;
 import com.example.agendate_app.Utils._Utils;
+import com.facebook.stetho.Stetho;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Stetho.initializeWithDefaults(this);
 
         _Utils.setActivity(this);
         _Utils.setContext(this);
