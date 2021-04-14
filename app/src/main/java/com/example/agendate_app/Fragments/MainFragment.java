@@ -38,21 +38,20 @@ public class MainFragment extends Fragment implements _SyncableGet {
 
         btnAgendar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                new RubroDS().syncGet(syncableGet);
-            }
+                if(_Utils.getmRubros().size()==0) {
+                    _Utils.toast("No hay rubros descargados");
+                    new RubroDS().syncGet(syncableGet);
+                } else {
+                    _Utils.fragment(new LineasFragment());
+                }
+             }
         });
 
         btnVerAgenda = myView.findViewById(R.id.msf_editar);
 
         btnVerAgenda.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(_Utils.getmRubros().size()==0) {
-                    _Utils.toast("No hay rubros descargados");
-                } else {
-                    for (Rubro r: _Utils.getmRubros()) {
-                        _Utils.toast(r.toString(),Toast.LENGTH_LONG);
-                    }
-                }
+
             }
         });
 

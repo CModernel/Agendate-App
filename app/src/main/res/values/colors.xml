@@ -12,4 +12,6 @@
     <color name="DarkTurquoise">#00CED1</color>
     <color name="red">#ff0000</color>
     <color name="Lime">#00FF00</color>
+    <color name="AzulPastel1">#A4006991</color>
+    <color name="White">#FFFFFF</color>
 </resources>
