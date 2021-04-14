@@ -51,7 +51,14 @@ public class MainFragment extends Fragment implements _SyncableGet {
 
         btnVerAgenda.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                new RubroDS().syncGet(syncableGet);
+                if(_Utils.getmRubros().size()==0) {
+                    _Utils.toast("No hay rubros descargados");
+                } else {
+                    for (Rubro r: _Utils.getmRubros()) {
+                        _Utils.toast(r.toString(),Toast.LENGTH_LONG);
+                    }
+                }
             }
         });
 
