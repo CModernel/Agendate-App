@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.agendate_app.Database._DBHelper;
-import com.example.agendate_app.Fragments.MainFragment;
+import com.example.agendate_app.MainActivity;
 import com.example.agendate_app.R;
 import com.example.agendate_app.Utils._Utils;
 
@@ -33,7 +33,7 @@ public class LoginFragment  extends Fragment {
 
         btn_Login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                _Utils.fragment(new MainFragment());
+                _Utils.fragment(new MainActivity.MenuPrincipalFragment());
             }
         });
 

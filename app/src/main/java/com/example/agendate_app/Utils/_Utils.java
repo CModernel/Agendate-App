@@ -17,12 +17,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.example.agendate_app.Database.Rubro;
-import com.example.agendate_app.Fragments.MainFragment;
 import com.example.agendate_app.MainActivity;
 import com.example.agendate_app.R;
 import java.util.ArrayList;
-import java.util.List;
+
 public class _Utils {
 
     static Context context;
@@ -33,21 +31,6 @@ public class _Utils {
     public static String CERRAR = "cerrar";
     public static String ATRAS = "atras";
     public static String FRAGMENT = "fragment";
-
-    static List<Rubro> mRubros  = new ArrayList<Rubro>();
-
-    public static List<Rubro> getmRubros() {
-        return mRubros;
-    }
-
-    public static void setmRubros(List<Rubro> mRubros) {
-        _Utils.mRubros = mRubros;
-    }
-
-    public static void addRubro(Rubro nuevoRubro){
-        _Utils.mRubros.add(nuevoRubro);
-    }
-
 
     // getter y setter de context
     public static Context getContext() {
@@ -137,7 +120,7 @@ public class _Utils {
                     } else if (action.equalsIgnoreCase(FRAGMENT)) {
                         if (fragment == null) {
                             // Si me mandan null me voy a FragmentMain
-                            _Utils.fragment(new MainFragment(), bundle);
+                            _Utils.fragment(new MainActivity.MenuPrincipalFragment(), bundle);
                         } else {
                             _Utils.fragment(fragment, bundle);
                         }

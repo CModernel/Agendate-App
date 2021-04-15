@@ -166,7 +166,6 @@ public class RubroDS implements _SyncableGet {
                 Rubro m;
                 try {
                     m = om.readValue(oJson.toString(), Rubro.class);
-                    _Utils.addRubro(m);
                     createRubro(m);
                 } catch (IOException e) {
                     Log.d("RubroDS : Lin225", e.getMessage());

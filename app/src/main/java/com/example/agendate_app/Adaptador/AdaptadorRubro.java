@@ -12,22 +12,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.agendate_app.Database.Rubro;
 import com.example.agendate_app.Database.RubroDS;
-import com.example.agendate_app.Fragments.LineasFragment;
+import com.example.agendate_app.Fragments.MostrarRubrosFragment;
 import com.example.agendate_app.Interfaces._RVListener;
 import com.example.agendate_app.R;
 import com.example.agendate_app.Utils._Utils;
 
 import java.util.List;
 
-public class AdaptadorRubroLineas extends RecyclerView.Adapter<AdaptadorRubroLineas.ViewHolder> {
+public class AdaptadorRubro extends RecyclerView.Adapter<AdaptadorRubro.ViewHolder> {
 
     private Context context;
     private LayoutInflater layoutInflater;
     private List<Rubro> rubros;
     private _RVListener clickListener;
-    LineasFragment callback;
+    MostrarRubrosFragment callback;
 
-    public AdaptadorRubroLineas(Context context, List<Rubro> rubros, _RVListener clickListener, LineasFragment callback) {
+    public AdaptadorRubro(Context context, List<Rubro> rubros, _RVListener clickListener, MostrarRubrosFragment callback) {
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
         this.rubros = rubros;

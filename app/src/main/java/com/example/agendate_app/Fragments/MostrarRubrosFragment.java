@@ -17,16 +17,17 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.agendate_app.Adaptador.AdaptadorRubroLineas;
+import com.example.agendate_app.Adaptador.AdaptadorRubro;
 import com.example.agendate_app.Database.Rubro;
 import com.example.agendate_app.Database.RubroDS;
 import com.example.agendate_app.Interfaces._RVListener;
+import com.example.agendate_app.MainActivity;
 import com.example.agendate_app.R;
 import com.example.agendate_app.Utils._Utils;
 
 import java.util.List;
 
-public class LineasFragment extends Fragment implements _RVListener {
+public class MostrarRubrosFragment extends Fragment implements _RVListener {
     View mView, mEmptyView;
     RecyclerView mLista;
     RecyclerView.Adapter<?> mAdapter;
@@ -43,7 +44,7 @@ public class LineasFragment extends Fragment implements _RVListener {
         mLista.setLayoutManager(mLayoutManager);
 
         setAdapterRubros();
-        _Utils.setBackAction(mView, new MainFragment());
+        _Utils.setBackAction(mView, new MainActivity.MenuPrincipalFragment());
         return mView;
     }
 
@@ -60,7 +61,7 @@ public class LineasFragment extends Fragment implements _RVListener {
                 mLista.setVisibility(View.VISIBLE);
                 mEmptyView.setVisibility(View.GONE);
 
-                mAdapter = new AdaptadorRubroLineas(_Utils.getContext(), rubros, this, this);
+                mAdapter = new AdaptadorRubro(_Utils.getContext(), rubros, this, this);
                 mLista.setHasFixedSize(true);
 
                 mLista.setAdapter(mAdapter);
@@ -86,7 +87,13 @@ public class LineasFragment extends Fragment implements _RVListener {
     @Override
     public void onRVItemClick(Fragment fragment, View view, Object object, int position) {
         try{
-            //_Utils.fragment(, bundle);
+            if(object instanceof List<?>) {
+                List<Rubro> mRubros = (List<Rubro>) object;
+                Rubro r = mRubros.get(position);
+                _Utils.toast("Se seleccionó rubro: "+r.getRubroNom());
+                
+                //_Utils.fragment(, bundle);
+            }
         } catch(Exception e){
             e.printStackTrace();
         }
