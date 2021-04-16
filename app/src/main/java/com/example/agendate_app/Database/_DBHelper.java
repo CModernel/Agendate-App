@@ -25,18 +25,40 @@ public class _DBHelper extends SQLiteOpenHelper {
             "PRIMARY KEY (id)" +
             ");";
 
+    private static final String CREATE_Empresas = "CREATE TABLE Empresas (" +
+            "EmpId INTEGER NOT NULL, " +
+            "EmpRUT INTEGER, " +
+            "EmpRazonSocial TEXT,"+
+            "EmpDirCalle TEXT,"+
+            "EmpDirEsquina TEXT,"+
+            "EmpDirNum INTEGER,"+
+            "EmpDirEmail TEXT,"+
+            "EmpTelefono TEXT,"+
+            "EmpDescripcion TEXT,"+
+            "EmpActivo BOOLEAN,"+
+            "EmpImagen TEXT,"+  // NO SE QUE TIPO DE DATO SERIA ESTA VARIABLE
+            "EmpRubro1 INTEGER,"+
+            "EmpRubro2 INTEGER," +
+            "PRIMARY KEY (EmpId)" +
+            ");";
+
+
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_Rubros);
+        db.execSQL(CREATE_Empresas);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
                 db.execSQL("DROP TABLE IF EXISTS Rubros;");
-        onCreate(db);
+                db.execSQL("DROP TABLE IF EXISTS Empresas;");
+                onCreate(db);
     }
 
     public void truncate(SQLiteDatabase db) {
         db.execSQL("DELETE FROM Rubros;");
+        db.execSQL("DELETE FROM Empresas;");
     }
 }

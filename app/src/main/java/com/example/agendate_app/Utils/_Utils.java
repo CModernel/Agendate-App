@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.agendate_app.Database.Empresas;
 import com.example.agendate_app.Database.Rubro;
 import com.example.agendate_app.Fragments.MainFragment;
 import com.example.agendate_app.MainActivity;
@@ -46,6 +47,21 @@ public class _Utils {
 
     public static void addRubro(Rubro nuevoRubro){
         _Utils.mRubros.add(nuevoRubro);
+    }
+
+    // empresas
+    static List<Empresas> mEmpresas  = new ArrayList<Empresas>();
+
+    public static List<Empresas> getmEmpresas() {
+        return mEmpresas;
+    }
+
+    public static void setmEmpresas(List<Empresas> mEmpresas) {
+        _Utils.mEmpresas = mEmpresas;
+    }
+
+    public static void addEmpresas(Empresas nuevoEmpresas){
+        _Utils.mEmpresas.add(nuevoEmpresas);
     }
 
 
@@ -183,4 +199,5 @@ public class _Utils {
             }
         });
     }
+
 }
