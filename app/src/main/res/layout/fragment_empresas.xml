@@ -18,25 +18,26 @@
     </LinearLayout>
 
     <View
-        android:id="@+id/fc_divider"
+        android:id="@+id/fc_divider1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignBottom="@id/fc_titulos"
         android:background="#D3D3D3" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/fc_rv"
+        android:id="@+id/fc_rv1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/fc_divider"
         android:layout_weight="1"
-        android:visibility="visible" />
+        android:visibility="visible"
+        tools:ignore="NotSibling" />
 
     <LinearLayout
-        android:id="@+id/fc_emptyview"
+        android:id="@+id/fc_emptyview1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/fc_divider"
+        android:layout_below="@id/fc_divider1"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone">

@@ -26,43 +26,43 @@ import com.example.agendate_app.Utils._Utils;
 import java.util.List;
 
 public class EmpresasFragment extends Fragment implements _RVListener {
-    View mView, mEmptyView;
-    RecyclerView mLista;
+    View mViewE, mEmptyViewE;
+    RecyclerView mListaE;
     RecyclerView.Adapter<?> mAdapter;
     LinearLayoutManager mLayoutManager;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_empresas, container, false);
+        mViewE = inflater.inflate(R.layout.fragment_empresas, container, false);
 
-        mEmptyView = mView.findViewById(R.id.fc_emptyview);
-        mLista = mView.findViewById(R.id.fc_rv);
+        mEmptyViewE = mViewE.findViewById(R.id.fc_emptyview1);
+        mListaE = mViewE.findViewById(R.id.fc_rv1);
         mLayoutManager = new LinearLayoutManager(getActivity());
-        mLista.setLayoutManager(mLayoutManager);
+        mListaE.setLayoutManager(mLayoutManager);
 
-        setAdapterRubros();
-        _Utils.setBackAction(mView, new MainFragment());
-        return mView;
+        setAdapterEmpresas();
+        _Utils.setBackAction(mViewE, new MainFragment());
+        return mViewE;
     }
 
-    private void setAdapterRubros() {
+    private void setAdapterEmpresas() {
 
         try {
             List<Empresas> Empresa = new EmpresasDS().getAllEmpresas();
 
             if (Empresa.size() <= 0) {
-                mLista.setVisibility(View.GONE);
-                mEmptyView.setVisibility(View.VISIBLE);
+                mListaE.setVisibility(View.GONE);
+                mEmptyViewE.setVisibility(View.VISIBLE);
 
             } else {
-                mLista.setVisibility(View.VISIBLE);
-                mEmptyView.setVisibility(View.GONE);
+                mListaE.setVisibility(View.VISIBLE);
+                mEmptyViewE.setVisibility(View.GONE);
 
                 mAdapter = new AdaptadorEmpresasLineas(_Utils.getContext(), Empresa, this, this);
-                mLista.setHasFixedSize(true);
+                mListaE.setHasFixedSize(true);
 
-                mLista.setAdapter(mAdapter);
+                mListaE.setAdapter(mAdapter);
             }
         } catch (Exception e){
             _Utils.toast("Hubo un error", Toast.LENGTH_SHORT);
