@@ -14,4 +14,7 @@
     <color name="Lime">#00FF00</color>
     <color name="AzulPastel1">#A4006991</color>
     <color name="White">#FFFFFF</color>
+    <color name="Black">#000000</color>
+    <color name="lightGray">#80D8D8D8</color>
+    <color name="darkGray">#a9a9a9</color>
 </resources>

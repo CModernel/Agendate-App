@@ -23,6 +23,7 @@ import com.example.agendate_app.Interfaces._RVListener;
 import com.example.agendate_app.R;
 import com.example.agendate_app.Utils._Utils;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class EmpresasFragment extends Fragment implements _RVListener {
@@ -30,6 +31,8 @@ public class EmpresasFragment extends Fragment implements _RVListener {
     RecyclerView mListaE;
     RecyclerView.Adapter<?> mAdapter;
     LinearLayoutManager mLayoutManager;
+    Bundle bundle;
+    int rubroId;
 
     @Nullable
     @Override
@@ -41,6 +44,7 @@ public class EmpresasFragment extends Fragment implements _RVListener {
         mLayoutManager = new LinearLayoutManager(getActivity());
         mListaE.setLayoutManager(mLayoutManager);
 
+        getBundle();
         setAdapterEmpresas();
         _Utils.setBackAction(mViewE, new MenuPrincipalFragment());
         return mViewE;
@@ -77,6 +81,21 @@ public class EmpresasFragment extends Fragment implements _RVListener {
         actionBar.setTitle("Empresas");
     }
 
+    public void getBundle(){
+        Bundle bundle = getArguments();
+        try {
+            if (bundle != null) {
+                // Obtenemos int de Rubro seleccionado
+                if (bundle.getInt("RubroId") != 0) {
+                    rubroId = bundle.getInt("RubroId");
+                }
+            }
+        }catch(Exception ex){
+            _Utils.toast("Ocurrio un error.");
+            ex.printStackTrace();
+        }
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
@@ -86,6 +105,8 @@ public class EmpresasFragment extends Fragment implements _RVListener {
     public void onRVItemClick(Fragment fragment, View view, Object object, int position) {
         try{
             //_Utils.fragment(, bundle);
+
+
         } catch(Exception e){
             e.printStackTrace();
         }

@@ -70,7 +70,7 @@ public class RubroDS implements _SyncableGet {
             }
         } catch (Exception e) {
             this.close();
-            Log.w(RubroDS.class.getName(), "Creando Rubros: ERROR 2 - insert - " + "id = " + id + ", VariedadId = " + rubroNom.trim() + " - " + e.getMessage());
+            Log.w(RubroDS.class.getName(), "Creando Rubros: ERROR 2 - insert - " + "id = " + id + ", rubroNom = " + rubroNom.trim() + " - " + e.getMessage());
             Log.d("RubroDS : Lin97", e.getMessage());
             e.printStackTrace();
             return false;

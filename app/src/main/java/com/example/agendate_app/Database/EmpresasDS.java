@@ -66,7 +66,18 @@ public class EmpresasDS implements _SyncableGet {
                                   Integer EmpRubro2) {
         ContentValues values = new ContentValues();
         values.put("EmpId", EmpId);
-        if (EmpRazonSocial != null) values.put("EmpRazonSocial", EmpRazonSocial.trim());
+        values.put("EmpRUT", EmpRUT);
+        if(EmpRazonSocial != null) values.put("EmpRazonSocial", EmpRazonSocial.trim());
+        if (EmpDirCalle != null) values.put("EmpDirCalle", EmpDirCalle.trim());
+        if (EmpDirEsquina != null) values.put("EmpDirEsquina", EmpDirEsquina.trim());
+        values.put("EmpDirNum", EmpDirNum);
+        if (EmpDirEmail != null) values.put("EmpDirEmail", EmpDirEmail.trim());
+        if (EmpTelefono != null) values.put("EmpTelefono", EmpTelefono.trim());
+        if (EmpDescripcion != null) values.put("EmpDescripcion", EmpDescripcion.trim());
+        values.put("EmpActivo", EmpActivo);
+        if (EmpImagen != null) values.put("EmpImagen", EmpImagen);
+        values.put("EmpRubro1", EmpRubro1);
+        values.put("EmpRubro2", EmpRubro2);
 
         try {
             this.openW();
@@ -82,7 +93,7 @@ public class EmpresasDS implements _SyncableGet {
         } catch (Exception e) {
             this.close();
             Log.w(EmpresasDS.class.getName(), "Creando Empresas: ERROR 2 - insert - " + "EmpId = " +
-                    EmpId + ", VariedadId = " + EmpRazonSocial.trim() + " - " + e.getMessage());
+                    EmpId + ", EmpRazonSocial = " + EmpRazonSocial.trim() + " - " + e.getMessage());
             Log.d("EmpresasDS : Lin97", e.getMessage());
             e.printStackTrace();
             return false;
@@ -95,6 +106,27 @@ public class EmpresasDS implements _SyncableGet {
         this.openR();
 
         String query = "select * from Empresas";
+
+        Cursor cursor = database.rawQuery(query, null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Empresas mEmpresa = cursorToEmpresas(cursor);
+            mEmpresas.add(mEmpresa);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        this.close();
+        return mEmpresas;
+    }
+
+    // Get All Empresas
+    public List<Empresas> getAllEmpresasPorRubro(int rubroId) {
+        List<Empresas> mEmpresas = new ArrayList<Empresas>();
+        this.openR();
+
+        String query = "select * from Empresas where " +
+                "EmpRubro1 = " + rubroId + " or EmpRubro2 = "+ rubroId+";";
 
         Cursor cursor = database.rawQuery(query, null);
 
@@ -158,7 +190,7 @@ public class EmpresasDS implements _SyncableGet {
 
     public boolean syncGet(_SyncableGet mSyncable) {
         syncable = mSyncable;
-        _WebServicesGet ws = new _WebServicesGet(_WebServicesGet._getEmpresas, this, "Empresas");
+        _WebServicesGet ws = new _WebServicesGet(_WebServicesGet._elegirServicio+"/"+_Utils.getRubroSeleccionado().getId(), this, "Empresas");
         ws.execute();
         return true;
     }
@@ -201,7 +233,8 @@ public class EmpresasDS implements _SyncableGet {
             oJson = null;
         }
         this.close();
-        if (syncable != null) syncable.syncGetReturn(tag, out, sgr);
+        if (syncable != null)
+            getSyncCallback().syncGetReturn(tag, out, sgr);
         return true;
     }
 

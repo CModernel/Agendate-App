@@ -2,6 +2,7 @@ package com.example.agendate_app.Fragments;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,20 +19,24 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.agendate_app.Adaptador.AdaptadorRubro;
+import com.example.agendate_app.Database.EmpresasDS;
 import com.example.agendate_app.Database.Rubro;
 import com.example.agendate_app.Database.RubroDS;
+import com.example.agendate_app.Database._SyncableGetResponse;
 import com.example.agendate_app.Interfaces._RVListener;
+import com.example.agendate_app.Interfaces._SyncableGet;
 import com.example.agendate_app.MainActivity;
 import com.example.agendate_app.R;
 import com.example.agendate_app.Utils._Utils;
 
 import java.util.List;
 
-public class MostrarRubrosFragment extends Fragment implements _RVListener {
+public class MostrarRubrosFragment extends Fragment implements _RVListener, _SyncableGet {
     View mView, mEmptyView;
     RecyclerView mLista;
     RecyclerView.Adapter<?> mAdapter;
     LinearLayoutManager mLayoutManager;
+    Rubro rubroSeleccionado;
 
     @Nullable
     @Override
@@ -89,10 +94,9 @@ public class MostrarRubrosFragment extends Fragment implements _RVListener {
         try{
             if(object instanceof List<?>) {
                 List<Rubro> mRubros = (List<Rubro>) object;
-                Rubro r = mRubros.get(position);
-                _Utils.toast("Se seleccionó rubro: "+r.getRubroNom());
-                
-                //_Utils.fragment(, bundle);
+                rubroSeleccionado = mRubros.get(position);
+                _Utils.setRubroSeleccionado(rubroSeleccionado);
+                new EmpresasDS().syncGet(this);
             }
         } catch(Exception e){
             e.printStackTrace();
@@ -104,4 +108,20 @@ public class MostrarRubrosFragment extends Fragment implements _RVListener {
 
     }
 
+    @Override
+    public boolean syncGetReturn(String tag, String out, _SyncableGetResponse sgr) {
+        if(rubroSeleccionado!=null) {
+            if(new EmpresasDS().getAllEmpresasPorRubro(rubroSeleccionado.getId()).size()>0) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("RubroId", rubroSeleccionado.getId());
+
+                _Utils.fragment(new EmpresasFragment(), bundle);
+            }
+        }else {
+            _Utils.toast("Ocurrió un error.");
+        }
+
+        Log.d(tag, "(MainFragment:syncGetReturn:55)" + tag + ":" + out);
+        return false;
+    }
 }

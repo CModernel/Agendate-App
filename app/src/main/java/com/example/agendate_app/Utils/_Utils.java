@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.agendate_app.Database.Rubro;
 import com.example.agendate_app.MainActivity;
 import com.example.agendate_app.R;
 import java.util.ArrayList;
@@ -31,6 +32,19 @@ public class _Utils {
     public static String CERRAR = "cerrar";
     public static String ATRAS = "atras";
     public static String FRAGMENT = "fragment";
+
+    public static String _URL_AGENDATE = "http://agendate.pythonanywhere.com";
+    public static String _PATH_STATIC = "/static";
+
+    public static Rubro rubroSeleccionado;
+
+    public static Rubro getRubroSeleccionado() {
+        return rubroSeleccionado;
+    }
+
+    public static void setRubroSeleccionado(Rubro rubroSeleccionado) {
+        _Utils.rubroSeleccionado = rubroSeleccionado;
+    }
 
     // getter y setter de context
     public static Context getContext() {
