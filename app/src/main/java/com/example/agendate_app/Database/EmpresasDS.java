@@ -187,7 +187,6 @@ public class EmpresasDS implements _SyncableGet {
                 Empresas m;
                 try {
                     m = om.readValue(oJson.toString(), Empresas.class);
-                    _Utils.addEmpresas(m);
                     createEmpresas(m);
                 } catch (IOException e) {
                     Log.d("EmpresasDS : Lin225", e.getMessage());

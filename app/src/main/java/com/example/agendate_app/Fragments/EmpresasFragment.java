@@ -42,7 +42,7 @@ public class EmpresasFragment extends Fragment implements _RVListener {
         mListaE.setLayoutManager(mLayoutManager);
 
         setAdapterEmpresas();
-        _Utils.setBackAction(mViewE, new MainFragment());
+        _Utils.setBackAction(mViewE, new MenuPrincipalFragment());
         return mViewE;
     }
 

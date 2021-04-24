@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.agendate_app.Database._DBHelper;
-import com.example.agendate_app.Fragments.MainFragment;
+import com.example.agendate_app.Fragments.MenuPrincipalFragment;
 import com.example.agendate_app.Interfaces._SyncableGet;
 import com.example.agendate_app.R;
 import com.example.agendate_app.Utils._Utils;
@@ -39,8 +39,8 @@ public class LoginFragment  extends Fragment {
 
         btn_Login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(usuario.getText()=="ADMIN" && password.getText() == "admin")
-                    _Utils.fragment(new MainFragment());
+                if(usuario.getText().toString().equals("ADMIN") && password.getText().toString().equals("admin"))
+                    _Utils.fragment(new MenuPrincipalFragment());
                 else{
                     _Utils.toast("Usuario incorrecto.");
                 }
