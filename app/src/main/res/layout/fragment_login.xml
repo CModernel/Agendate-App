@@ -59,7 +59,8 @@
                     android:imeOptions="actionNext"
                     android:inputType="textCapCharacters"
                     android:maxLines="1"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:text="ADMIN"/>
 
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
@@ -78,7 +79,8 @@
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:text="admin"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
