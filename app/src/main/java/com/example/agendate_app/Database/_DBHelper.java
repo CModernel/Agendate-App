@@ -42,23 +42,32 @@ public class _DBHelper extends SQLiteOpenHelper {
             "PRIMARY KEY (EmpId)" +
             ");";
 
+    private static final String CREATE_SolicitudEmpresa = "CREATE TABLE SolicitudEmpresa (" +
+            "EmpId INTEGER NOT NULL, " +
+            "Fecha DATE, " +
+            "HorarioSolicitud TIME,"+
+            "PRIMARY KEY (EmpId)" +
+            ");";
 
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_Rubros);
         db.execSQL(CREATE_Empresas);
+        db.execSQL(CREATE_SolicitudEmpresa);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
                 db.execSQL("DROP TABLE IF EXISTS Rubros;");
                 db.execSQL("DROP TABLE IF EXISTS Empresas;");
+                db.execSQL("DROP TABLE IF EXISTS SolicitudEmpresa;");
                 onCreate(db);
     }
 
     public void truncate(SQLiteDatabase db) {
         db.execSQL("DELETE FROM Rubros;");
         db.execSQL("DELETE FROM Empresas;");
+        db.execSQL("DELETE FROM SolicitudEmpresa;");
     }
 }
