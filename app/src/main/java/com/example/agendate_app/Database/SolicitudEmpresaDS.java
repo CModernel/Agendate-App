@@ -91,10 +91,6 @@ public class SolicitudEmpresaDS implements _SyncableGet{
             return false;
         }
 
-
-
-
-
     }
 
     private SolicitudEmpresa cursorToSolicitudEmpresa(Cursor cursor) {
@@ -111,16 +107,56 @@ public class SolicitudEmpresaDS implements _SyncableGet{
         return mSolicitudEmpresas;
     }
 
+    public List<SolicitudEmpresa> getHorarioPorSolicitudEmpresa(SolicitudEmpresa solicitudEmpresa){
+        List<SolicitudEmpresa> retorno = new ArrayList<SolicitudEmpresa>();
+        SolicitudEmpresa solEmp;
+        for (String hora: solicitudEmpresa.getHorario()) {
+            solEmp = new SolicitudEmpresa();
+            solEmp.setHorario(new String[]{hora});
+            for (String solicitud: solicitudEmpresa.getSolicitudes()) {
+                if(hora.equals(solicitud))
+                    solEmp.setSolicitudes(new String[]{solicitud});
+            }
+            for (String horarioVencido: solicitudEmpresa.getHorariosVencidos()) {
+                if(hora.equals(horarioVencido))
+                    solEmp.setHorariosVencidos(new String[]{horarioVencido});
+            }
+            retorno.add(solEmp);
+        }
+        return retorno;
+    }
+
+
+    private _SyncableGet syncable;
+
+    private _SyncableGet getSyncCallback() {
+        return syncable;
+    }
+
+    private void setSyncCallback(_SyncableGet sCallback) {
+        this.syncable = sCallback;
+    }
+
+    public boolean syncGet(_SyncableGet mSyncable) {
+        syncable = mSyncable;
+        String fecha = "2021-04-26";
+        String urlIn = _WebServicesGet._elegirHorario+"/"+_Utils.getEmpresaSeleccionada().getEmpId()+"/"+fecha;
+        _WebServicesGet ws = new _WebServicesGet(urlIn, this, "SolicitudEmpresa");
+        ws.execute();
+        return true;
+    }
+
     @Override
     public boolean syncGetReturn(String tag, String out, _SyncableGetResponse sgr) {
         ObjectMapper om = new ObjectMapper();
         om.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
         om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
+        String out2 = "[" + out + "]";
         JsonNode cJson = null; // JSON de coleccion de objetos
         JsonNode oJson = null; // JSON de objeto
         try {
-            cJson = om.readTree(out);
+            cJson = om.readTree(out2);
             // si la coleccion es nula o de tamaño cero me voy
             if (cJson == null || cJson.size() == 0) {
                 return false;
@@ -132,7 +168,7 @@ public class SolicitudEmpresaDS implements _SyncableGet{
                 SolicitudEmpresa m;
                 try {
                     m = om.readValue(oJson.toString(), SolicitudEmpresa.class);
-                    createSolicitudEmpresa(m);
+                    _Utils.setSolicitudesEmpresa(m);
                 } catch (IOException e) {
                     //Log.d("SolicitudEmpresaDS : Lin225", e.getMessage());
                     e.printStackTrace();
@@ -146,7 +182,8 @@ public class SolicitudEmpresaDS implements _SyncableGet{
             oJson = null;
         }
         this.close();
-
+        if (syncable != null)
+            getSyncCallback().syncGetReturn(tag, out, sgr);
         return true;
 
     }

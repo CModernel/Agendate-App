@@ -34,6 +34,8 @@ public class MostrarSolicitudEmpresaFragment extends Fragment implements _RVList
     RecyclerView mLista;
     RecyclerView.Adapter<?> mAdapter;
     LinearLayoutManager mLayoutManager;
+    Bundle bundle;
+    SolicitudEmpresa solicitudEmpresa;
 
     @Nullable
     @Override
@@ -46,6 +48,7 @@ public class MostrarSolicitudEmpresaFragment extends Fragment implements _RVList
         mLayoutManager = new LinearLayoutManager(getActivity());
         mLista.setLayoutManager(mLayoutManager);
 
+        getBundle();
         setAdapterSolicitudEmpresa();
         _Utils.setBackAction(mView, new MainActivity.MenuPrincipalFragment());
         return mView;
@@ -54,7 +57,8 @@ public class MostrarSolicitudEmpresaFragment extends Fragment implements _RVList
     private void setAdapterSolicitudEmpresa() {
 
         try {
-            List<SolicitudEmpresa> SolicitudEmpresa = new SolicitudEmpresaDS().getAllSolicitudEmpresa();
+
+            List<SolicitudEmpresa> SolicitudEmpresa = new SolicitudEmpresaDS().getHorarioPorSolicitudEmpresa(solicitudEmpresa);
 
             if (SolicitudEmpresa.size() <= 0) {
                 mLista.setVisibility(View.GONE);
@@ -72,6 +76,24 @@ public class MostrarSolicitudEmpresaFragment extends Fragment implements _RVList
             }
         } catch (Exception e){
             _Utils.toast("Hubo un error", Toast.LENGTH_SHORT);
+        }
+    }
+
+
+    public void getBundle(){
+        bundle = getArguments();
+        try {
+            if (bundle != null) {
+                // Obtenemos int de Rubro seleccionado
+                if (bundle.getSerializable("SolicitudesEmpresa")!= null) {
+                    solicitudEmpresa = (SolicitudEmpresa) bundle.getSerializable("SolicitudesEmpresa");
+                }
+            } else {
+                solicitudEmpresa = _Utils.getSolicitudesEmpresa();
+            }
+        }catch(Exception ex){
+            _Utils.toast("Ocurrio un error.");
+            ex.printStackTrace();
         }
     }
 

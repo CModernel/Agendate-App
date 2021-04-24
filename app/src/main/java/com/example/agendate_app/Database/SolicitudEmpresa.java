@@ -7,22 +7,27 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "EmpId",
-        "Fecha",
-        "HorarioSolicitud",})
+        "Horario",
+        "Solicitudes",
+        "HorariosVencidos",})
 
-public class SolicitudEmpresa {
+public class SolicitudEmpresa implements Serializable {
 
-    @JsonProperty("EmpId")
+    @JsonProperty("Horario")
+    private String[] Horario;
+    @JsonProperty("Solicitudes")
+    private String[] Solicitudes;
+    @JsonProperty("HorariosVencidos")
+    private String[] HorariosVencidos;
+
     private Integer EmpId;
-    @JsonProperty("Fecha")
     private Date Fecha;
-    @JsonProperty("HorarioSolicitud")
     private Time HorarioSolicitud;
 
 
@@ -34,6 +39,15 @@ public class SolicitudEmpresa {
 
     }
 
+/*
+    public SolicitudEmpresa(String[] Horario, String[] Solicitudes, String[] HorariosVencidos) {
+        super();
+        this.Horario = Horario;
+        this.Solicitudes = Solicitudes;
+        this.HorariosVencidos = HorariosVencidos;
+
+    }
+*/
     public SolicitudEmpresa() {
 
     }
@@ -46,27 +60,54 @@ public class SolicitudEmpresa {
         return null;
     }
 
-    @JsonProperty("EmpId")
+    @JsonProperty("Horario")
+    public String[] getHorario() {
+        return Horario;
+    }
+    @JsonProperty("Horario")
+    public void setHorario(String[] Horario) {
+        this.Horario = Horario;
+    }
+
+
+    @JsonProperty("Solicitudes")
+    public String[] getSolicitudes() {
+        return Solicitudes;
+    }
+    @JsonProperty("Solicitudes")
+    public void setSolicitudes(String[] Solicitudes) {
+        this.Solicitudes = Solicitudes;
+    }
+
+    @JsonProperty("HorariosVencidos")
+    public String[] getHorariosVencidos() {
+        return HorariosVencidos;
+    }
+    @JsonProperty("HorariosVencidos")
+    public void setHorariosVencidos(String[] HorariosVencidos) {
+        this.HorariosVencidos = HorariosVencidos;
+    }
+
     public Integer getEmpId() {
         return EmpId;
     }
-    @JsonProperty("EmpId")
+
     public void setEmpId(Integer empId) {
         EmpId = empId;
     }
-    @JsonProperty("Fecha")
+
     public Date getFecha() {
         return Fecha;
     }
-    @JsonProperty("Fecha")
+
     public void setFecha(Date fecha) {
         Fecha = fecha;
     }
-    @JsonProperty("HorarioSolicitud")
+
     public Time getHorarioSolicitud() {
         return HorarioSolicitud;
     }
-    @JsonProperty("HorarioSolicitud")
+
     public void setHorarioSolicitud(Time horarioSolicitud) {
         HorarioSolicitud = horarioSolicitud;
     }

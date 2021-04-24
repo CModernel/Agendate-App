@@ -110,18 +110,21 @@ public class MostrarRubrosFragment extends Fragment implements _RVListener, _Syn
 
     @Override
     public boolean syncGetReturn(String tag, String out, _SyncableGetResponse sgr) {
+
         if(rubroSeleccionado!=null) {
             if(new EmpresasDS().getAllEmpresasPorRubro(rubroSeleccionado.getId()).size()>0) {
                 Bundle bundle = new Bundle();
                 bundle.putInt("RubroId", rubroSeleccionado.getId());
 
-                _Utils.fragment(new EmpresasFragment(), bundle);
+                _Utils.fragment(new MostrarEmpresasFragment(), bundle);
+            } else {
+                _Utils.toast("No existen empresas para ese rubro.");
             }
         }else {
             _Utils.toast("Ocurrió un error.");
         }
 
-        Log.d(tag, "(MainFragment:syncGetReturn:55)" + tag + ":" + out);
+        Log.d(tag, "(MostrarRubrosFragment:syncGetReturn:127)" + tag + ":" + out);
         return false;
     }
 }

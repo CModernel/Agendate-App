@@ -17,10 +17,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.agendate_app.Database.Empresas;
 import com.example.agendate_app.Database.Rubro;
+import com.example.agendate_app.Database.SolicitudEmpresa;
 import com.example.agendate_app.MainActivity;
 import com.example.agendate_app.R;
 import java.util.ArrayList;
+import java.util.List;
 
 public class _Utils {
 
@@ -36,7 +39,26 @@ public class _Utils {
     public static String _URL_AGENDATE = "http://agendate.pythonanywhere.com";
     public static String _PATH_STATIC = "/static";
 
-    public static Rubro rubroSeleccionado;
+    private static Rubro rubroSeleccionado;
+    private static Empresas empresaSeleccionada;
+
+    private static SolicitudEmpresa solicitudesEmpresa;
+
+    public static SolicitudEmpresa getSolicitudesEmpresa() {
+        return solicitudesEmpresa;
+    }
+
+    public static void setSolicitudesEmpresa(SolicitudEmpresa solicitudesEmpresa) {
+        _Utils.solicitudesEmpresa = solicitudesEmpresa;
+    }
+
+    public static Empresas getEmpresaSeleccionada() {
+        return empresaSeleccionada;
+    }
+
+    public static void setEmpresaSeleccionada(Empresas empresaSeleccionada) {
+        _Utils.empresaSeleccionada = empresaSeleccionada;
+    }
 
     public static Rubro getRubroSeleccionado() {
         return rubroSeleccionado;

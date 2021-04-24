@@ -190,7 +190,8 @@ public class EmpresasDS implements _SyncableGet {
 
     public boolean syncGet(_SyncableGet mSyncable) {
         syncable = mSyncable;
-        _WebServicesGet ws = new _WebServicesGet(_WebServicesGet._elegirServicio+"/"+_Utils.getRubroSeleccionado().getId(), this, "Empresas");
+        String urlIn = _WebServicesGet._elegirServicio+"/"+_Utils.getRubroSeleccionado().getId();
+        _WebServicesGet ws = new _WebServicesGet(urlIn, this, "Empresas");
         ws.execute();
         return true;
     }
