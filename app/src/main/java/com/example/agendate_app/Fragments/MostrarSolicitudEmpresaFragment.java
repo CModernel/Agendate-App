@@ -6,6 +6,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,16 +19,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.agendate_app.Adaptador.AdaptadorRubro;
 import com.example.agendate_app.Adaptador.AdaptadorSolicitudEmpresa;
-import com.example.agendate_app.Database.Rubro;
-import com.example.agendate_app.Database.RubroDS;
 import com.example.agendate_app.Database.SolicitudEmpresa;
 import com.example.agendate_app.Database.SolicitudEmpresaDS;
 import com.example.agendate_app.Interfaces._RVListener;
 import com.example.agendate_app.MainActivity;
 import com.example.agendate_app.R;
 import com.example.agendate_app.Utils._Utils;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -41,17 +42,46 @@ public class MostrarSolicitudEmpresaFragment extends Fragment implements _RVList
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_linea, container, false);
+        mView = inflater.inflate(R.layout.fragment_pedido_layout, container, false);
 
-        mEmptyView = mView.findViewById(R.id.fc_emptyview);
-        mLista = mView.findViewById(R.id.fc_rv);
+        mEmptyView = mView.findViewById(R.id.fpl_llEmpty);
+        mLista = mView.findViewById(R.id.listapedidos);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mLista.setLayoutManager(mLayoutManager);
 
         getBundle();
+        build();
         setAdapterSolicitudEmpresa();
         _Utils.setBackAction(mView, new MainActivity.MenuPrincipalFragment());
         return mView;
+    }
+
+    private void build(){
+        if(_Utils.getEmpresaSeleccionada()!=null) {
+            // Razon Social Empresa
+            TextView tvnombre = mView.findViewById(R.id.icc_txt_tvnombre);
+            tvnombre.setText(_Utils.getEmpresaSeleccionada().getEmpRazonSocial());
+
+            // Telefono
+            TextView tvtel = mView.findViewById(R.id.icc_txt_tvtelefono);
+            tvtel.setText("Telefono: " + _Utils.getEmpresaSeleccionada().getEmpTelefono());
+
+            // Direccion
+            TextView tvdir = mView.findViewById(R.id.icc_txt_tvdir);
+            String direccion = _Utils.getEmpresaSeleccionada().getEmpDirCalle() + _Utils.getEmpresaSeleccionada().getEmpDirNum();
+            if(!_Utils.getEmpresaSeleccionada().getEmpDirEsquina().isEmpty())
+                direccion += " Esq. " + _Utils.getEmpresaSeleccionada().getEmpDirEsquina();
+
+            tvdir.setText(direccion);
+            tvdir.setSelected(true);
+
+            ImageView ivfoto = mView.findViewById(R.id.icc_txt_letranom);
+            String urlImage = _Utils._URL_AGENDATE+_Utils._PATH_STATIC + _Utils.getEmpresaSeleccionada().getEmpImagen();
+            Picasso.get().load(urlImage).into(ivfoto);
+
+            Button btnfecha = mView.findViewById(R.id.fpl_btnFecha);
+            btnfecha.setText("Fecha: " + "2021-04-26");
+        }
     }
 
     private void setAdapterSolicitudEmpresa() {
@@ -68,8 +98,7 @@ public class MostrarSolicitudEmpresaFragment extends Fragment implements _RVList
                 mLista.setVisibility(View.VISIBLE);
                 mEmptyView.setVisibility(View.GONE);
 
-                mAdapter = new AdaptadorSolicitudEmpresa(_Utils.getContext(), SolicitudEmpresa,
-                        this, this);
+                mAdapter = new AdaptadorSolicitudEmpresa(_Utils.getContext(), SolicitudEmpresa,this, this);
                 mLista.setHasFixedSize(true);
 
                 mLista.setAdapter(mAdapter);

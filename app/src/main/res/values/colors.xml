@@ -11,10 +11,13 @@
     <color name="darkOrange">#ffa500</color>
     <color name="DarkTurquoise">#00CED1</color>
     <color name="red">#ff0000</color>
+    <color name="darkred">#CE770000</color>
     <color name="Lime">#00FF00</color>
     <color name="AzulPastel1">#A4006991</color>
     <color name="White">#FFFFFF</color>
     <color name="Black">#000000</color>
     <color name="lightGray">#80D8D8D8</color>
     <color name="darkGray">#a9a9a9</color>
+    <color name="LightGrey">#d3d3d3</color>
+    <color name="alma_gradiente1">#006991</color>
 </resources>

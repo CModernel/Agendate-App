@@ -39,9 +39,9 @@ public class AdaptadorSolicitudEmpresa extends RecyclerView.Adapter<AdaptadorSol
 
     @NonNull
     @Override
-    public AdaptadorSolicitudEmpresa.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = layoutInflater.inflate(R.layout.item_linea, parent, false);
-        return new AdaptadorSolicitudEmpresa.ViewHolder(view);
+        return new ViewHolder(view);
     }
     
 
@@ -50,11 +50,13 @@ public class AdaptadorSolicitudEmpresa extends RecyclerView.Adapter<AdaptadorSol
         try {
             SolicitudEmpresa linea = SolicitudEmpresas.get(position);
 
-            holder.SolicitudEmpresa = new SolicitudEmpresaDS().getSolicitudEmpresa(linea.getEmpId());
+            holder.SolicitudEmpresa = linea;
 
-            holder.dsc.setText(holder.SolicitudEmpresa.getEmpId().toString() +
-                    " - "+ holder.SolicitudEmpresa.getFecha().toString() +
-                    " - "+ holder.SolicitudEmpresa.getHorarioSolicitud().toString());
+
+            holder.dsc.setText(linea.getHorario()[0]);
+            if(linea.getSolicitudes() != null || linea.getHorariosVencidos() != null){
+                holder.innercontainer.setBackgroundColor(_Utils.getActivity().getResources().getColor(R.color.darkred));
+            }
 
         }catch (Exception ex){
             _Utils.toast(ex.getMessage());
@@ -63,7 +65,7 @@ public class AdaptadorSolicitudEmpresa extends RecyclerView.Adapter<AdaptadorSol
 
     @Override
     public int getItemCount() {
-        return SolicitudEmpresa.size();
+        return SolicitudEmpresas.size();
     }
 
     public SolicitudEmpresa getItem(int position) {
@@ -73,7 +75,7 @@ public class AdaptadorSolicitudEmpresa extends RecyclerView.Adapter<AdaptadorSol
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
-        LinearLayout container;
+        LinearLayout container, innercontainer;
         TextView dsc;
 
         SolicitudEmpresa SolicitudEmpresa;
@@ -84,6 +86,8 @@ public class AdaptadorSolicitudEmpresa extends RecyclerView.Adapter<AdaptadorSol
             container = itemView.findViewById(R.id.ic_container);
             container.setOnClickListener(this);
             container.setOnLongClickListener(this);
+
+            innercontainer = itemView.findViewById(R.id.ic_innercontainer);
 
             dsc = itemView.findViewById(R.id.ic_dsc);
         }

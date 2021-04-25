@@ -4,18 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_margin="5dp"
+    android:layout_margin="3dp"
     android:background="@drawable/shape_rectangulo_blanco_no_padding"
     android:elevation="2dp">
 
     <LinearLayout
+        android:id="@+id/ic_innercontainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/teal_700"
         android:orientation="horizontal"
-        android:padding="3dp"
-        android:layout_margin="10dp">
+        android:padding="1dp"
+        android:layout_margin="5dp">
 
         <TextView
             android:id="@+id/ic_dsc"
