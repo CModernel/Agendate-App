@@ -53,6 +53,7 @@ public class _DBHelper extends SQLiteOpenHelper {
             "UsuId INTEGER,"+
             "EmpId INTEGER,"+
             "UsuAdminResponsable INTEGER,"+
+            "PRIMARY KEY (id)" +
             ");";
 
     private static final String CREATE_SolicitudEmpresa = "CREATE TABLE SolicitudEmpresa (" +
