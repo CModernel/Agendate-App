@@ -120,7 +120,8 @@ public class _Utils {
         if (b != null)
             f.setArguments(b);
 
-        _Utils.toast(f.getClass().getSimpleName());
+        // Toast para ver fragment actual
+        //_Utils.toast(f.getClass().getSimpleName());
 
         fm.beginTransaction().replace(R.id.content_frame, f).setCustomAnimations(R.animator.slide_in_right, R.animator.slide_out_left, R.animator.slide_in_left, R.animator.slide_out_right).commitAllowingStateLoss();
     }
