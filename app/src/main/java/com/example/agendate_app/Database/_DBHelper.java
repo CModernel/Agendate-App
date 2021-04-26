@@ -7,7 +7,7 @@ import android.util.Log;
 
 public class _DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "com.kaizen.agendate.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
     public _DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -42,6 +42,14 @@ public class _DBHelper extends SQLiteOpenHelper {
             "PRIMARY KEY (EmpId)" +
             ");";
 
+
+    private static final String CREATE_SolicitudEmpresa = "CREATE TABLE SolicitudEmpresa (" +
+            "EmpId INTEGER NOT NULL, " +
+            "Fecha DATE, " +
+            "HorarioSolicitud TIME,"+
+            "PRIMARY KEY (EmpId)" +
+            ");";
+
     private static final String CREATE_Veragenda = "CREATE TABLE Veragenda (" +
             "id INTEGER NOT NULL, " +
             "FechaSolicitud DATE, " +
@@ -56,13 +64,13 @@ public class _DBHelper extends SQLiteOpenHelper {
             "PRIMARY KEY (id)" +
             ");";
 
-    private static final String CREATE_SolicitudEmpresa = "CREATE TABLE SolicitudEmpresa (" +
-            "EmpId INTEGER NOT NULL, " +
-            "Fecha DATE, " +
-            "HorarioSolicitud TIME,"+
-            "PRIMARY KEY (EmpId)" +
+    private static final String CREATE_Vermiperfil = "CREATE TABLE Vermiperfil (" +
+            "username TEXT NOT NULL, " +
+            "first_name TEXT, " +
+            "last_name TEXT,"+
+            "email TEXT,"+
+            "PRIMARY KEY (username)" +
             ");";
-
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -70,6 +78,7 @@ public class _DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_Empresas);
         db.execSQL(CREATE_SolicitudEmpresa);
         db.execSQL(CREATE_Veragenda);
+        db.execSQL(CREATE_Vermiperfil);
     }
 
     @Override
@@ -78,6 +87,7 @@ public class _DBHelper extends SQLiteOpenHelper {
                 db.execSQL("DROP TABLE IF EXISTS Empresas;");
                 db.execSQL("DROP TABLE IF EXISTS SolicitudEmpresa;");
                 db.execSQL("DROP TABLE IF EXISTS Veragenda;");
+                db.execSQL("DROP TABLE IF EXISTS Vermiperfil;");
                 onCreate(db);
     }
 
@@ -86,5 +96,6 @@ public class _DBHelper extends SQLiteOpenHelper {
         db.execSQL("DELETE FROM Empresas;");
         db.execSQL("DELETE FROM SolicitudEmpresa;");
         db.execSQL("DELETE FROM Veragenda;");
+        db.execSQL("DELETE FROM Vermiperfil;");
     }
 }
