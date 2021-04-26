@@ -51,7 +51,7 @@ public class MostrarEmpresasFragment extends Fragment implements _RVListener, _S
 
         getBundle();
         setAdapterEmpresas();
-        _Utils.setBackAction(mViewE, new MenuPrincipalFragment());
+        _Utils.setAccionAtras(mViewE, new MostrarRubrosFragment(), bundle);
         return mViewE;
     }
 
@@ -93,7 +93,11 @@ public class MostrarEmpresasFragment extends Fragment implements _RVListener, _S
                 // Obtenemos int de Rubro seleccionado
                 if (bundle.getInt("RubroId") != 0) {
                     rubroId = bundle.getInt("RubroId");
+                }else {
+                    rubroId = _Utils.getRubroSeleccionado().getId();
                 }
+            } else {
+                rubroId = _Utils.getRubroSeleccionado().getId();
             }
         }catch(Exception ex){
             _Utils.toast("Ocurrio un error.");

@@ -55,7 +55,7 @@ public class MostrarVerMiPerfilFragment extends Fragment implements _SyncableGet
         });
 
         cargarPerfil();
-
+        _Utils.setAccionAtras(myView, new MenuPrincipalFragment(), null);
         return myView;
     }
 

@@ -51,7 +51,7 @@ public class MostrarVerAgendaFragment extends Fragment implements _RVListener, _
         mLista.setLayoutManager(mLayoutManager);
 
         setAdapterVerAgenda();
-        _Utils.setBackAction(mView, new MainActivity.MenuPrincipalFragment());
+        _Utils.setAccionAtras(mView, new MenuPrincipalFragment(), null);
         return mView;
     }
 

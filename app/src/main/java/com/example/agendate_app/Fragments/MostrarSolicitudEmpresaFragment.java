@@ -56,7 +56,7 @@ public class MostrarSolicitudEmpresaFragment extends Fragment implements _RVList
         getBundle();
         build();
         setAdapterSolicitudEmpresa();
-        _Utils.setBackAction(mView, new MainActivity.MenuPrincipalFragment());
+        _Utils.setAccionAtras(mView, new MostrarEmpresasFragment(), bundle);
         return mView;
     }
 
@@ -120,6 +120,8 @@ public class MostrarSolicitudEmpresaFragment extends Fragment implements _RVList
                 // Obtenemos int de Rubro seleccionado
                 if (bundle.getSerializable("SolicitudesEmpresa")!= null) {
                     solicitudEmpresa = (SolicitudEmpresa) bundle.getSerializable("SolicitudesEmpresa");
+                } else {
+                    solicitudEmpresa = _Utils.getSolicitudesEmpresa();
                 }
             } else {
                 solicitudEmpresa = _Utils.getSolicitudesEmpresa();

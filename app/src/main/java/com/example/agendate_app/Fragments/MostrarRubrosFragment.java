@@ -3,6 +3,7 @@ package com.example.agendate_app.Fragments;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -48,8 +49,9 @@ public class MostrarRubrosFragment extends Fragment implements _RVListener, _Syn
         mLayoutManager = new LinearLayoutManager(getActivity());
         mLista.setLayoutManager(mLayoutManager);
 
+        _Utils.setAccionAtras(mView, new MenuPrincipalFragment(), null);
         setAdapterRubros();
-        _Utils.setBackAction(mView, new MainActivity.MenuPrincipalFragment());
+
         return mView;
     }
 

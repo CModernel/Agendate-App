@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.agendate_app.Database.AgendaDS;
@@ -66,7 +68,13 @@ public class MenuPrincipalFragment extends Fragment implements _SyncableGet {
         });
         return myView;
     }
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        ActionBar actionBar = activity.getSupportActionBar();
+        actionBar.setTitle("Menu Principal");
+    }
     @Override
     public boolean syncGetReturn(String tag, String out, _SyncableGetResponse sgr) {
         if(tag.equals("Rubros")) {
