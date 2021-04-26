@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import com.example.agendate_app.Database.AgendaDS;
 import com.example.agendate_app.Database.Rubro;
 import com.example.agendate_app.Database.RubroDS;
+import com.example.agendate_app.Database.UsuarioDS;
 import com.example.agendate_app.Database._SyncableGetResponse;
 import com.example.agendate_app.Interfaces._SyncableGet;
 import com.example.agendate_app.R;
@@ -28,7 +29,7 @@ public class MenuPrincipalFragment extends Fragment implements _SyncableGet {
     private _SyncableGet syncableGet = this;
     View myView;
 
-    LinearLayout btnAgendar, btnVerAgenda;
+    LinearLayout btnAgendar, btnVerAgenda, btnVerMiPerfil;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -52,6 +53,17 @@ public class MenuPrincipalFragment extends Fragment implements _SyncableGet {
             }
         });
 
+        btnVerMiPerfil = myView.findViewById(R.id.msf_ver_mi_perfil);
+
+        btnVerMiPerfil.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(new UsuarioDS().getAllUsuarios().size() > 0)
+                    _Utils.fragment(new MostrarVerMiPerfilFragment());
+                else
+                    new UsuarioDS().syncGet(syncableGet);
+
+            }
+        });
         return myView;
     }
 
@@ -63,6 +75,11 @@ public class MenuPrincipalFragment extends Fragment implements _SyncableGet {
             }
         }else if(tag.equals("Agendas")) {
             _Utils.fragment(new MostrarVerAgendaFragment());
+        } else if(tag.equals("Usuario")) {
+            if(new UsuarioDS().getAllUsuarios().size() > 0)
+                _Utils.fragment(new MostrarVerMiPerfilFragment());
+            else
+                _Utils.toast("Ocurrio un error al traer los datos de perfil.");
         }
         Log.d(tag, "(MainFragment:syncGetReturn:55)" + tag + ":" + out);
         return false;

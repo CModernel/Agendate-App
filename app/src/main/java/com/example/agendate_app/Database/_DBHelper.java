@@ -7,7 +7,7 @@ import android.util.Log;
 
 public class _DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "com.kaizen.agendate.db";
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 7;
 
     public _DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -64,7 +64,7 @@ public class _DBHelper extends SQLiteOpenHelper {
             "PRIMARY KEY (id)" +
             ");";
 
-    private static final String CREATE_Vermiperfil = "CREATE TABLE Vermiperfil (" +
+    private static final String CREATE_Usuarios = "CREATE TABLE Usuarios (" +
             "username TEXT NOT NULL, " +
             "first_name TEXT, " +
             "last_name TEXT,"+
@@ -78,7 +78,7 @@ public class _DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_Empresas);
         db.execSQL(CREATE_SolicitudEmpresa);
         db.execSQL(CREATE_Agenda);
-        db.execSQL(CREATE_Vermiperfil);
+        db.execSQL(CREATE_Usuarios);
     }
 
     @Override
@@ -87,7 +87,7 @@ public class _DBHelper extends SQLiteOpenHelper {
                 db.execSQL("DROP TABLE IF EXISTS Empresas;");
                 db.execSQL("DROP TABLE IF EXISTS SolicitudEmpresa;");
                 db.execSQL("DROP TABLE IF EXISTS Agenda;");
-                db.execSQL("DROP TABLE IF EXISTS Vermiperfil;");
+                db.execSQL("DROP TABLE IF EXISTS Usuarios;");
                 onCreate(db);
     }
 
@@ -96,6 +96,6 @@ public class _DBHelper extends SQLiteOpenHelper {
         db.execSQL("DELETE FROM Empresas;");
         db.execSQL("DELETE FROM SolicitudEmpresa;");
         db.execSQL("DELETE FROM Agenda;");
-        db.execSQL("DELETE FROM Vermiperfil;");
+        db.execSQL("DELETE FROM Usuarios;");
     }
 }

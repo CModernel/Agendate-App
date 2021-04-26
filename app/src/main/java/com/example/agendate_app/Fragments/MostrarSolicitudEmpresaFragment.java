@@ -1,5 +1,6 @@
 package com.example.agendate_app.Fragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,7 +24,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.agendate_app.Adaptador.AdaptadorSolicitudEmpresa;
 import com.example.agendate_app.Database.SolicitudEmpresa;
 import com.example.agendate_app.Database.SolicitudEmpresaDS;
+import com.example.agendate_app.Database._SyncableGetResponse;
 import com.example.agendate_app.Interfaces._RVListener;
+import com.example.agendate_app.Interfaces._SyncableGet;
 import com.example.agendate_app.MainActivity;
 import com.example.agendate_app.R;
 import com.example.agendate_app.Utils._Utils;
@@ -30,7 +34,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class MostrarSolicitudEmpresaFragment extends Fragment implements _RVListener {
+public class MostrarSolicitudEmpresaFragment extends Fragment implements _RVListener, _SyncableGet {
     View mView, mEmptyView;
     RecyclerView mLista;
     RecyclerView.Adapter<?> mAdapter;
@@ -80,7 +84,7 @@ public class MostrarSolicitudEmpresaFragment extends Fragment implements _RVList
             Picasso.get().load(urlImage).into(ivfoto);
 
             Button btnfecha = mView.findViewById(R.id.fpl_btnFecha);
-            btnfecha.setText("Fecha: " + "2021-04-26");
+            btnfecha.setText("Fecha: " + _Utils.FechaSeleccionada);
         }
     }
 
@@ -145,9 +149,30 @@ public class MostrarSolicitudEmpresaFragment extends Fragment implements _RVList
             if(object instanceof List<?>) {
                 List<SolicitudEmpresa> mSolicitudEmpresas = (List<SolicitudEmpresa>) object;
                 SolicitudEmpresa r = mSolicitudEmpresas.get(position);
-                _Utils.toast("Se seleccionó SolicitudEmpresa: "+r.getFecha());
+                if(r.getSolicitudes() != null || r.getHorariosVencidos() != null){
+                    _Utils.toast("Ya existe solicitud para la hora seleccionada.");
+                }else
+                {
+                    AlertDialog.Builder dialogo1 = new AlertDialog.Builder(_Utils.getActivity());
+                    dialogo1.setTitle("Alta Solicitud");
+                    dialogo1.setMessage("Desea dar de alta la solicitud seleccionada?");
+                    dialogo1.setCancelable(true);
+                    dialogo1.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogo1, int id) {
+                            // TODO
+                            // Ejecutar WS para dar de baja la solicitud
+                            // "/crearSolicitudV1/<str:empresaSel>/<str:fechaSel>/<str:horaSel>/<str:usuId>"
+                            new SolicitudEmpresaDS().altaSolicitud(MostrarSolicitudEmpresaFragment.this::syncGetReturn, _Utils.getEmpresaSeleccionada().getEmpId(), _Utils.FechaSeleccionada, r.getHorario()[0], _Utils.UsuId);
 
-                //_Utils.fragment(, bundle);
+                        }
+                    });
+                    dialogo1.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogo1, int id) {
+
+                        }
+                    });
+                    dialogo1.show();
+                }
             }
         } catch(Exception e){
             e.printStackTrace();
@@ -159,4 +184,14 @@ public class MostrarSolicitudEmpresaFragment extends Fragment implements _RVList
 
     }
 
+    @Override
+    public boolean syncGetReturn(String tag, String out, _SyncableGetResponse sgr) {
+        // Refrescar Fragment
+        if(tag.equals("crearSolicitud"))
+            new SolicitudEmpresaDS().syncGet(this);
+        else if(tag.equals("SolicitudEmpresa"))
+            _Utils.fragment(new MostrarSolicitudEmpresaFragment());
+
+        return false;
+    }
 }

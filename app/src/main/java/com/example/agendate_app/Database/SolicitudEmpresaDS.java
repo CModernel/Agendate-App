@@ -139,9 +139,17 @@ public class SolicitudEmpresaDS implements _SyncableGet{
 
     public boolean syncGet(_SyncableGet mSyncable) {
         syncable = mSyncable;
-        String fecha = "2021-04-26";
-        String urlIn = _WebServicesGet._elegirHorario+"/"+_Utils.getEmpresaSeleccionada().getEmpId()+"/"+fecha;
+        String urlIn = _WebServicesGet._elegirHorario+"/"+_Utils.getEmpresaSeleccionada().getEmpId()+"/"+_Utils.FechaSeleccionada;
         _WebServicesGet ws = new _WebServicesGet(urlIn, this, "SolicitudEmpresa");
+        ws.execute();
+        return true;
+    }
+
+    // "/crearSolicitudV1/<str:empresaSel>/<str:fechaSel>/<str:horaSel>/<str:usuId>"
+    public boolean altaSolicitud(_SyncableGet mSyncable, int empId, String fecha, String hora, int usuId) {
+        syncable = mSyncable;
+        String urlIn = _WebServicesGet._crearSolicitud+"/"+empId+"/"+fecha+"/" + hora +"/" + usuId;
+        _WebServicesGet ws = new _WebServicesGet(urlIn, this, "crearSolicitud");
         ws.execute();
         return true;
     }
@@ -152,11 +160,23 @@ public class SolicitudEmpresaDS implements _SyncableGet{
         om.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
         om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-        //String out2 = "[" + out + "]";
+        if(tag.equals("crearSolicitud")){
+            if(out.contains("OK")){
+                if (syncable != null)
+                    getSyncCallback().syncGetReturn(tag, out, sgr);
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
+
+
+        String out2 = "[" + out + "]";
         JsonNode cJson = null; // JSON de coleccion de objetos
         JsonNode oJson = null; // JSON de objeto
         try {
-            cJson = om.readTree(out);
+            cJson = om.readTree(out2);
             // si la coleccion es nula o de tamaño cero me voy
             if (cJson == null || cJson.size() == 0) {
                 return false;

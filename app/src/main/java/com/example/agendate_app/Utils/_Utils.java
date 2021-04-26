@@ -45,6 +45,8 @@ public class _Utils {
 
     // Usuario ADMIN, id=1
     public final static int UsuId = 1;
+    // Fecha Seleccionada
+    public final static String FechaSeleccionada = "2021-04-26";
 
     public static SolicitudEmpresa getSolicitudesEmpresa() {
         return solicitudesEmpresa;

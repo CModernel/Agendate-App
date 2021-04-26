@@ -95,7 +95,7 @@ public class AdaptadorSolicitudEmpresa extends RecyclerView.Adapter<AdaptadorSol
         @Override
         public void onClick(View v) {
             if (clickListener != null)
-                clickListener.onRVItemClick(null, v,  SolicitudEmpresa, getAdapterPosition());
+                clickListener.onRVItemClick(null, v,  SolicitudEmpresas, getAdapterPosition());
         }
 
         @Override
