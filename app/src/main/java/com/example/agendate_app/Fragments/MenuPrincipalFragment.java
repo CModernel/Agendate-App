@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.agendate_app.Database.AgendaDS;
 import com.example.agendate_app.Database.Rubro;
 import com.example.agendate_app.Database.RubroDS;
 import com.example.agendate_app.Database._SyncableGetResponse;
@@ -47,7 +48,7 @@ public class MenuPrincipalFragment extends Fragment implements _SyncableGet {
 
         btnVerAgenda.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                new AgendaDS().syncGet(syncableGet);
             }
         });
 
@@ -56,10 +57,13 @@ public class MenuPrincipalFragment extends Fragment implements _SyncableGet {
 
     @Override
     public boolean syncGetReturn(String tag, String out, _SyncableGetResponse sgr) {
-        if(new RubroDS().getAllRubros().size()>0){
-            _Utils.fragment(new MostrarRubrosFragment());
+        if(tag.equals("Rubros")) {
+            if (new RubroDS().getAllRubros().size() > 0) {
+                _Utils.fragment(new MostrarRubrosFragment());
+            }
+        }else if(tag.equals("Agendas")) {
+            _Utils.fragment(new MostrarVerAgendaFragment());
         }
-
         Log.d(tag, "(MainFragment:syncGetReturn:55)" + tag + ":" + out);
         return false;
     }

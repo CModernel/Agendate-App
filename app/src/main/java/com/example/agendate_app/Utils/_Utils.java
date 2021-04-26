@@ -17,14 +17,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.agendate_app.Database.Agenda;
 import com.example.agendate_app.Database.Empresas;
 import com.example.agendate_app.Database.Rubro;
 import com.example.agendate_app.Database.SolicitudEmpresa;
-import com.example.agendate_app.Database.VerAgenda;
 import com.example.agendate_app.MainActivity;
 import com.example.agendate_app.R;
 import java.util.ArrayList;
-import java.util.List;
 
 public class _Utils {
 
@@ -42,10 +41,10 @@ public class _Utils {
 
     private static Rubro rubroSeleccionado;
     private static Empresas empresaSeleccionada;
-
     private static SolicitudEmpresa solicitudesEmpresa;
 
-    private static VerAgenda verAgenda;
+    // Usuario ADMIN, id=1
+    public final static int UsuId = 1;
 
     public static SolicitudEmpresa getSolicitudesEmpresa() {
         return solicitudesEmpresa;
@@ -69,15 +68,6 @@ public class _Utils {
 
     public static void setRubroSeleccionado(Rubro rubroSeleccionado) {
         _Utils.rubroSeleccionado = rubroSeleccionado;
-    }
-
-    // ver agenda
-    public static VerAgenda verAgenda() {
-        return verAgenda;
-    }
-
-    public static void setVerAgenda(VerAgenda verAgenda) {
-        _Utils.verAgenda = verAgenda;
     }
 
     // getter y setter de context
@@ -215,6 +205,4 @@ public class _Utils {
         });
     }
 
-    public static void setSolicitudVerAgenda(VerAgenda solicitudVerAgenda) {
-    }
 }

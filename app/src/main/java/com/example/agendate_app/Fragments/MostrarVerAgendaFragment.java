@@ -1,5 +1,6 @@
 package com.example.agendate_app.Fragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,15 +13,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.agendate_app.Adaptador.AdaptadorVerAgenda;
-import com.example.agendate_app.Database.EmpresasDS;
-import com.example.agendate_app.Database.VerAgenda;
-import com.example.agendate_app.Database.VerAgendaDS;
+import com.example.agendate_app.Database.Agenda;
+import com.example.agendate_app.Database.AgendaDS;
 import com.example.agendate_app.Database._SyncableGetResponse;
 import com.example.agendate_app.Interfaces._RVListener;
 import com.example.agendate_app.Interfaces._SyncableGet;
@@ -36,7 +37,7 @@ public class MostrarVerAgendaFragment extends Fragment implements _RVListener, _
     RecyclerView mLista;
     RecyclerView.Adapter<?> mAdapter;
     LinearLayoutManager mLayoutManager;
-    VerAgenda solicitudVerAgenda;
+    Agenda mAgenda;
 
     @Nullable
     @Override
@@ -57,9 +58,9 @@ public class MostrarVerAgendaFragment extends Fragment implements _RVListener, _
     private void setAdapterVerAgenda() {
 
         try {
-            List<VerAgenda> VerAgenda = new VerAgendaDS().getAllVerAgenda(solicitudVerAgenda.getId());
+            List<Agenda> listaAgenda = new AgendaDS().getAllAgendasActivas();
 
-            if (VerAgenda.size() <= 0) {
+            if (listaAgenda.size() <= 0) {
                 mLista.setVisibility(View.GONE);
                 mEmptyView.setVisibility(View.VISIBLE);
 
@@ -67,7 +68,7 @@ public class MostrarVerAgendaFragment extends Fragment implements _RVListener, _
                 mLista.setVisibility(View.VISIBLE);
                 mEmptyView.setVisibility(View.GONE);
 
-                mAdapter = new AdaptadorVerAgenda(_Utils.getContext(), VerAgenda, this, this);
+                mAdapter = new AdaptadorVerAgenda(_Utils.getContext(), listaAgenda, this, this);
                 mLista.setHasFixedSize(true);
 
                 mLista.setAdapter(mAdapter);
@@ -82,7 +83,7 @@ public class MostrarVerAgendaFragment extends Fragment implements _RVListener, _
         super.onResume();
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         ActionBar actionBar = activity.getSupportActionBar();
-        actionBar.setTitle("VerAgenda");
+        actionBar.setTitle("Agenda");
     }
 
     @Override
@@ -94,10 +95,28 @@ public class MostrarVerAgendaFragment extends Fragment implements _RVListener, _
     public void onRVItemClick(Fragment fragment, View view, Object object, int position) {
         try{
             if(object instanceof List<?>) {
-                List<VerAgenda> mVerAgenda = (List<VerAgenda>) object;
-                solicitudVerAgenda = mVerAgenda.get(position);
-                _Utils.setSolicitudVerAgenda(solicitudVerAgenda);
-                new EmpresasDS().syncGet(this);
+                List<Agenda> mAgendas = (List<Agenda>) object;
+                Agenda a = mAgendas.get(position);
+
+                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(_Utils.getActivity());
+                dialogo1.setTitle("Baja Solicitud");
+                dialogo1.setMessage("Desea dar de baja la solicitud seleccionada?");
+                dialogo1.setCancelable(true);
+                dialogo1.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogo1, int id) {
+                        // TODO
+                        // Ejecutar WS para dar de baja la solicitud
+                        new AgendaDS().bajaAgendaLocal(a.getId());
+                        // Refrescar Adaptador
+                        setAdapterVerAgenda();
+                    }
+                });
+                dialogo1.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogo1, int id) {
+
+                    }
+                });
+                dialogo1.show();
             }
         } catch(Exception e){
             e.printStackTrace();
@@ -111,11 +130,11 @@ public class MostrarVerAgendaFragment extends Fragment implements _RVListener, _
 
     @Override
     public boolean syncGetReturn(String tag, String out, _SyncableGetResponse sgr) {
-
-        if(solicitudVerAgenda!=null) {
-            if(new VerAgendaDS().getAllVerAgenda(solicitudVerAgenda.getId()).size()>0) {
+/*
+        if(mAgenda !=null) {
+            if(new AgendaDS().getAllAgendas(mAgenda.getId()).size()>0) {
                 Bundle bundle = new Bundle();
-                bundle.putInt("id", solicitudVerAgenda.getId());
+                bundle.putInt("id", mAgenda.getId());
 
                 _Utils.fragment(new MostrarVerAgendaFragment(), bundle);
             } else {
@@ -123,7 +142,7 @@ public class MostrarVerAgendaFragment extends Fragment implements _RVListener, _
             }
         }else {
             _Utils.toast("Ocurrió un error.");
-        }
+        }*/
 
         Log.d(tag, "(MostrarVerAgendaFragment:syncGetReturn:127)" + tag + ":" + out);
         return false;

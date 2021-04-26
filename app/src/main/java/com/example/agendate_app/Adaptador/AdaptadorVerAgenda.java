@@ -1,19 +1,23 @@
 package com.example.agendate_app.Adaptador;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.example.agendate_app.Database.VerAgenda;
-import com.example.agendate_app.Database.VerAgendaDS;
+import com.example.agendate_app.Database.Agenda;
+import com.example.agendate_app.Database.AgendaDS;
 import com.example.agendate_app.Fragments.MostrarVerAgendaFragment;
 import com.example.agendate_app.Interfaces._RVListener;
 import com.example.agendate_app.R;
@@ -21,19 +25,19 @@ import com.example.agendate_app.Utils._Utils;
 
 import java.util.List;
 
-public class AdaptadorVerAgenda extends RecyclerView.Adapter<AdaptadorVerAgenda.ViewHolder {
+public class AdaptadorVerAgenda extends RecyclerView.Adapter<AdaptadorVerAgenda.ViewHolder>{
 
     private Context context;
     private LayoutInflater layoutInflater;
-    private List<VerAgenda> VerAgenda;
+    private List<Agenda> mAgendas;
     private _RVListener clickListener;
     MostrarVerAgendaFragment callback;
 
-    public AdaptadorVerAgenda(Context context, List<VerAgenda> VerAgenda, _RVListener clickListener,
+    public AdaptadorVerAgenda(Context context, List<Agenda> listaAgendas, _RVListener clickListener,
                               MostrarVerAgendaFragment callback) {
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
-        this.VerAgenda = VerAgenda;
+        this.mAgendas = listaAgendas;
         this.clickListener = clickListener;
         this.callback = callback;
     }
@@ -42,7 +46,7 @@ public class AdaptadorVerAgenda extends RecyclerView.Adapter<AdaptadorVerAgenda.
     @NonNull
     @Override
     public AdaptadorVerAgenda.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = layoutInflater.inflate(R.layout.fragment_ver_agenda, parent, false);
+        View view = layoutInflater.inflate(R.layout.item_planilla, parent, false);
         return new AdaptadorVerAgenda.ViewHolder(view);
     }
 
@@ -50,13 +54,16 @@ public class AdaptadorVerAgenda extends RecyclerView.Adapter<AdaptadorVerAgenda.
     @Override
     public void onBindViewHolder(@NonNull AdaptadorVerAgenda.ViewHolder holder, int position) {
         try {
-            VerAgenda linea = VerAgenda.get(position);
+            Agenda linea = mAgendas.get(position);
 
-            holder.VerAgenda = new VerAgendaDS().getVerAgenda(linea.getEmpId());
+            holder.mAgenda = linea;
 
-
-            holder.id.setText(linea.getId().toString());
-
+            // TODO
+            // Ir a la tabla empresa y traer el nombre
+            holder.empId.setText(linea.getEmpId().toString());
+            holder.fechaSolicitud.setText(linea.getFechaSolicitud());
+            holder.hora.setText(linea.getHoraSolicitud());
+            holder.rubro.setText("");
 
         }catch (Exception ex){
             _Utils.toast(ex.getMessage());
@@ -65,11 +72,11 @@ public class AdaptadorVerAgenda extends RecyclerView.Adapter<AdaptadorVerAgenda.
 
     @Override
     public int getItemCount() {
-        return VerAgenda.size();
+        return mAgendas.size();
     }
 
-    public VerAgenda getItem(int position) {
-        return VerAgenda.get(position);
+    public Agenda getItem(int position) {
+        return mAgendas.get(position);
     }
 
 
@@ -78,31 +85,33 @@ public class AdaptadorVerAgenda extends RecyclerView.Adapter<AdaptadorVerAgenda.
 
         LinearLayout container;
 
-        VerAgenda VerAgenda;
-        TextView id, FechaSolicitud, HoraSolicitud, SeConcreto, ComentarioAdmin, ComentarioUsuario,
-                SolicitudActivo, UsuId,EmpId, UsuAdminResponsable;
-
+        Agenda mAgenda;
+        TextView empId, fechaSolicitud, hora, rubro;
+        ImageButton remove;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            container = itemView.findViewById(R.id.ic_empcontainer);
-            container.setOnClickListener(this);
-            container.setOnLongClickListener(this);
+            container = itemView.findViewById(R.id.ip_container);
+            //container.setOnClickListener(this);
+            //container.setOnLongClickListener(this);
 
 
 
-            id = (TextView) itemView.findViewById(R.id.ic_txt_empid);
-            FechaSolicitud = (TextView) itemView.findViewById(R.id.ic_txt_empnombre);
-            ComentarioUsuario = (TextView) itemView.findViewById(R.id.ic_txt_empdireccion);
+            empId = (TextView) itemView.findViewById(R.id.pla_nro_tview);
+            fechaSolicitud = (TextView) itemView.findViewById(R.id.pla_fecha_tview);
+            hora = (TextView) itemView.findViewById(R.id.estado_tview);
+            rubro = (TextView) itemView.findViewById(R.id.nro_viaje_tview);
 
-            ComentarioUsuario.setSelected(true);
+            remove = (ImageButton) itemView.findViewById(R.id.imageView3);
+            remove.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             if (clickListener != null)
-                clickListener.onRVItemClick(null, v,  VerAgenda, getAdapterPosition());
+                clickListener.onRVItemClick(null, v, mAgendas, getAdapterPosition());
+
         }
 
         @Override

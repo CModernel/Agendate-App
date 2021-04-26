@@ -21,7 +21,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
         "EmpId",
         "UsuAdminResponsable",})
 
-public class VerAgenda {
+public class Agenda {
 
         @JsonProperty("id")
         private Integer id;
@@ -36,7 +36,7 @@ public class VerAgenda {
         @JsonProperty("ComentarioUsuario")
         private String ComentarioUsuario;
         @JsonProperty("SolicitudActivo")
-        private String SolicitudActivo;
+        private boolean SolicitudActivo;
         @JsonProperty("UsuId")
         private Integer UsuId;
         @JsonProperty("EmpId")
@@ -44,10 +44,10 @@ public class VerAgenda {
         @JsonProperty("UsuAdminResponsable")
         private Integer UsuAdminResponsable;
 
-        public VerAgenda(Integer id, String FechaSolicitud, String HoraSolicitud,
-                    String SeConcreto, String ComentarioAdmin, String ComentarioUsuario,
-                    String SolicitudActivo, Integer UsuId, Integer EmpId,
-                        Integer UsuAdminResponsable) {
+        public Agenda(Integer id, String FechaSolicitud, String HoraSolicitud,
+                      String SeConcreto, String ComentarioAdmin, String ComentarioUsuario,
+                      boolean SolicitudActivo, Integer UsuId, Integer EmpId,
+                      Integer UsuAdminResponsable) {
             super();
             this.id = id;
             this.FechaSolicitud = FechaSolicitud;
@@ -62,7 +62,7 @@ public class VerAgenda {
 
         }
 
-    public VerAgenda() {
+    public Agenda() {
 
     }
 
@@ -115,11 +115,11 @@ public class VerAgenda {
             ComentarioUsuario = comentarioUsuario;
         }
         @JsonProperty("SolicitudActivo")
-        public String getSolicitudActivo() {
+        public boolean getSolicitudActivo() {
             return SolicitudActivo;
         }
         @JsonProperty("SolicitudActivo")
-        public void setSolicitudActivo(String solicitudActivo) {
+        public void setSolicitudActivo(boolean solicitudActivo) {
             SolicitudActivo = solicitudActivo;
         }
         @JsonProperty("UsuId")
@@ -163,7 +163,7 @@ public class VerAgenda {
             if (!(other instanceof Rubro)) {
                 return false;
             }
-            VerAgenda rhs = ((VerAgenda) other);
+            Agenda rhs = ((Agenda) other);
             return new EqualsBuilder().append(id, rhs.id).append(FechaSolicitud, rhs.FechaSolicitud).
                     append(HoraSolicitud, rhs.HoraSolicitud).append(SeConcreto, rhs.SeConcreto).
                     append(ComentarioAdmin, rhs.ComentarioAdmin).append(ComentarioUsuario, rhs.ComentarioUsuario).

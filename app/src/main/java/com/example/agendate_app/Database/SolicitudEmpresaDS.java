@@ -152,11 +152,11 @@ public class SolicitudEmpresaDS implements _SyncableGet{
         om.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
         om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-        String out2 = "[" + out + "]";
+        //String out2 = "[" + out + "]";
         JsonNode cJson = null; // JSON de coleccion de objetos
         JsonNode oJson = null; // JSON de objeto
         try {
-            cJson = om.readTree(out2);
+            cJson = om.readTree(out);
             // si la coleccion es nula o de tamaño cero me voy
             if (cJson == null || cJson.size() == 0) {
                 return false;
