@@ -1,5 +1,6 @@
 package com.example.agendate_app.Database;
 
+import com.example.agendate_app.Fragments.AltaDeUsuario;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -108,4 +109,6 @@ public class Usuario {
         return new EqualsBuilder().append(username, rhs.username).append(first_name, rhs.first_name).append(last_name, rhs.last_name).append(email, rhs.email).isEquals();
     }
 
+    public void register(AltaDeUsuario altaDeUsuario, String username, String name, String lastname, String email, String password1, String password2) {
+    }
 }
