@@ -49,7 +49,7 @@ public class AdaptadorRubro extends RecyclerView.Adapter<AdaptadorRubro.ViewHold
 
             holder.rubro = new RubroDS().getRubros(linea.getId());
 
-            holder.dsc.setText(holder.rubro.getId().toString() + " - "+ holder.rubro.getRubroNom());
+            holder.dsc.setText(holder.rubro.getRubroNom());
 
         }catch (Exception ex){
             _Utils.toast(ex.getMessage());

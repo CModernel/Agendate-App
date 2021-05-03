@@ -83,7 +83,7 @@ public class MostrarEmpresasFragment extends Fragment implements _RVListener, _S
         super.onResume();
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         ActionBar actionBar = activity.getSupportActionBar();
-        actionBar.setTitle("Empresas");
+        actionBar.setTitle("Seleccione una Empresa");
     }
 
     public void getBundle(){
@@ -117,6 +117,7 @@ public class MostrarEmpresasFragment extends Fragment implements _RVListener, _S
                 List<Empresas> mEmpresas = (List<Empresas>) object;
                 empresaSeleccionada = mEmpresas.get(position);
                 _Utils.setEmpresaSeleccionada(empresaSeleccionada);
+                _Utils.setFechaSeleccionada(_Utils.getFechaHoy());
                 new SolicitudEmpresaDS().syncGet(this);
             }
         } catch(Exception e){

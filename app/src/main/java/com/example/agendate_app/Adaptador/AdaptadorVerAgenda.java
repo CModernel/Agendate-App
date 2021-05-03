@@ -60,10 +60,17 @@ public class AdaptadorVerAgenda extends RecyclerView.Adapter<AdaptadorVerAgenda.
 
             // TODO
             // Ir a la tabla empresa y traer el nombre
-            holder.empId.setText(linea.getEmpId().toString());
             holder.fechaSolicitud.setText(linea.getFechaSolicitud());
             holder.hora.setText(linea.getHoraSolicitud());
-            holder.rubro.setText("");
+
+            if(linea.getEmpRazonSocial()!=null)
+                holder.empId.setText(linea.getEmpRazonSocial());
+
+            if(linea.getEmpRubro1()!=null)
+                holder.rubro.setText(linea.getEmpRubro1());
+
+            if(linea.getEmpTelefono()!=null)
+                holder.telefono.setText(linea.getEmpTelefono());
 
         }catch (Exception ex){
             _Utils.toast(ex.getMessage());
@@ -86,7 +93,7 @@ public class AdaptadorVerAgenda extends RecyclerView.Adapter<AdaptadorVerAgenda.
         LinearLayout container;
 
         Agenda mAgenda;
-        TextView empId, fechaSolicitud, hora, rubro;
+        TextView empId, fechaSolicitud, hora, rubro, telefono;
         ImageButton remove;
 
         public ViewHolder(View itemView) {
@@ -96,13 +103,11 @@ public class AdaptadorVerAgenda extends RecyclerView.Adapter<AdaptadorVerAgenda.
             //container.setOnClickListener(this);
             //container.setOnLongClickListener(this);
 
-
-
             empId = (TextView) itemView.findViewById(R.id.pla_nro_tview);
             fechaSolicitud = (TextView) itemView.findViewById(R.id.pla_fecha_tview);
             hora = (TextView) itemView.findViewById(R.id.estado_tview);
             rubro = (TextView) itemView.findViewById(R.id.nro_viaje_tview);
-
+            telefono = (TextView) itemView.findViewById(R.id.pla_nro_tel);
             remove = (ImageButton) itemView.findViewById(R.id.imageView3);
             remove.setOnClickListener(this);
         }

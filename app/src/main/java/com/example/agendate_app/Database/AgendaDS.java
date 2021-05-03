@@ -15,6 +15,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +30,7 @@ public class AgendaDS implements _SyncableGet {
 
     private String[] allAgendaColumns = {"id", "FechaSolicitud", "HoraSolicitud", "SeConcreto",
             "ComentarioAdmin", "ComentarioUsuario", "SolicitudActivo", "UsuId", "EmpId",
-            "UsuAdminResponsable"};
+            "UsuAdminResponsable", "EmpRazonSocial", "EmpTelefono", "EmpRubro1"};
 
     public AgendaDS() {
         dbHelper = new _DBHelper(_Utils.getContext());
@@ -55,13 +57,13 @@ public class AgendaDS implements _SyncableGet {
     public boolean createAgenda(Agenda o) {
         return createAgenda(o.getId(), o.getFechaSolicitud(),o.getHoraSolicitud(),o.getSeConcreto(),
                 o.getComentarioAdmin(),o.getComentarioUsuario(),o.getSolicitudActivo(),o.getUsuId(),
-                o.getEmpId(), o.getUsuAdminResponsable());
+                o.getEmpId(), o.getUsuAdminResponsable(), o.getEmpRazonSocial(), o.getEmpTelefono(), o.getEmpRubro1());
     }
 
     private boolean createAgenda(Integer id, String fechaSolicitud, String horaSolicitud,
                                  String seConcreto, String comentarioAdmin,
                                  String comentarioUsuario, boolean solicitudActivo, Integer usuId,
-                                 Integer empId, Integer usuAdminResponsable) {
+                                 Integer empId, Integer usuAdminResponsable, String EmpRazonSocial, String EmpTelefono, String EmpRubro1) {
 
         ContentValues values = new ContentValues();
         values.put("id", id);
@@ -74,7 +76,10 @@ public class AgendaDS implements _SyncableGet {
         values.put("usuId", usuId);
         values.put("empId", empId);
         values.put("usuAdminResponsable", usuAdminResponsable);
-        try {
+        if(EmpRazonSocial!=null) values.put("EmpRazonSocial",EmpRazonSocial);
+        if(EmpTelefono!=null) values.put("EmpTelefono", EmpTelefono);
+        if(EmpRubro1!=null) values.put("EmpRubro1", EmpRubro1);
+            try {
             this.openW();
             if (database.replace("Agenda", null, values) >= 0) {
                 this.close();
@@ -195,6 +200,9 @@ public class AgendaDS implements _SyncableGet {
         mAgenda.setUsuId(cursor.getInt(i++));
         mAgenda.setEmpId(cursor.getInt(i++));
         mAgenda.setUsuAdminResponsable(cursor.getInt(i++));
+        mAgenda.setEmpRazonSocial(cursor.getString(i++));
+        mAgenda.setEmpTelefono(cursor.getString(i++));
+        mAgenda.setEmpRubro1(cursor.getString(i++));
         return mAgenda;
     }
 
@@ -216,8 +224,22 @@ public class AgendaDS implements _SyncableGet {
         return true;
     }
 
+    public boolean syncBajaSolicitud(_SyncableGet mSyncable, int solicitud) {
+        syncable = mSyncable;
+        String urlIn = _WebServicesGet._bajaSolicitud+"/"+solicitud;
+        _WebServicesGet ws = new _WebServicesGet(urlIn, (_SyncableGet) this, "bajaSolicitud");
+        ws.execute();
+        return true;
+    }
+
     @Override
     public boolean syncGetReturn(String tag, String out, _SyncableGetResponse sgr) {
+
+        if(tag.equals("bajaSolicitud")) {
+            if (syncable != null)
+                getSyncCallback().syncGetReturn(tag, out, sgr);
+            return true;
+        }
 
         ObjectMapper om = new ObjectMapper();
         om.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
@@ -240,6 +262,14 @@ public class AgendaDS implements _SyncableGet {
                 Agenda m;
                 try {
                     m = om.readValue(oJson.toString(), Agenda.class);
+                    JSONObject json = new JSONObject(oJson.toString());
+                    JSONObject json2 = json.getJSONObject("EmpresaRubro");
+                    String EmpRazonSocial = json2.getString("EmpRazonSocial");
+                    String EmpTelefono = json2.getString("EmpTelefono");
+                    String EmpRubro1 = json2.getString("EmpRubro1");
+                    m.setEmpRazonSocial(EmpRazonSocial);
+                    m.setEmpTelefono(EmpTelefono);
+                    m.setEmpRubro1(EmpRubro1);
                     createAgenda(m);
                 } catch (IOException e) {
                     Log.d("AgendaDS : Lin225", e.getMessage());

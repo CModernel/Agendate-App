@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.agendate_app.Database.AgendaDS;
@@ -48,9 +50,6 @@ public class MostrarVerMiPerfilFragment extends Fragment implements _SyncableGet
         btnConfirmar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 guardarPerfil();
-                _Utils.toast("Usuario actualizado correctamente.");
-                _Utils.fragment(new MenuPrincipalFragment());
-
             }
         });
 
@@ -68,15 +67,33 @@ public class MostrarVerMiPerfilFragment extends Fragment implements _SyncableGet
     }
 
     public void guardarPerfil(){
-        mUsuario.setUsername(fcpl_username.getText().toString());
         mUsuario.setFirst_name(fcpl_first_name.getText().toString());
         mUsuario.setLast_name(fcpl_last_name.getText().toString());
         mUsuario.setEmail(fcpl_email.getText().toString());
         new UsuarioDS().CreateUsuario(mUsuario);
+        // Sync de usuario
+        new UsuarioDS().syncGetModificarDatos(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        ActionBar actionBar = activity.getSupportActionBar();
+        actionBar.setTitle("Mi Perfil");
     }
 
     @Override
     public boolean syncGetReturn(String tag, String out, _SyncableGetResponse sgr) {
+        if(tag.equals("modificarPerfil")) {
+            if (out.contains("OK")) {
+                _Utils.toast("Usuario actualizado correctamente.");
+                _Utils.fragment(new MenuPrincipalFragment());
+            } else {
+                _Utils.toast(out.replace('"',' '));
+            }
+        }
+
         /*if(tag.equals("Rubros")) {
             if (new RubroDS().getAllRubros().size() > 0) {
                 _Utils.fragment(new MostrarRubrosFragment());

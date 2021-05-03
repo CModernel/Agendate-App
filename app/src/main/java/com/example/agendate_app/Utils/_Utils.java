@@ -25,6 +25,7 @@ import com.example.agendate_app.Fragments.MenuPrincipalFragment;
 import com.example.agendate_app.MainActivity;
 import com.example.agendate_app.R;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class _Utils {
 
@@ -45,9 +46,19 @@ public class _Utils {
     private static SolicitudEmpresa solicitudesEmpresa;
 
     // Usuario ADMIN, id=1
-    public final static int UsuId = 1;
+    public static String Username = "admin";
+    public static String Password = "admin";
+    public static int UsuId = 1;
     // Fecha Seleccionada
-    public final static String FechaSeleccionada = "2021-04-26";
+    public static String FechaSeleccionada = "2021-04-26";
+
+    public static String getFechaSeleccionada() {
+        return FechaSeleccionada;
+    }
+
+    public static void setFechaSeleccionada(String fechaSeleccionada) {
+        FechaSeleccionada = fechaSeleccionada;
+    }
 
     public static SolicitudEmpresa getSolicitudesEmpresa() {
         return solicitudesEmpresa;
@@ -144,6 +155,28 @@ public class _Utils {
                 return false;
             }
         } );
+    }
+
+    public static String getFechaHoy(){
+        Calendar cal = Calendar.getInstance();
+        int año = cal.get(Calendar.YEAR);
+        int mes = cal.get(Calendar.MONTH);
+        mes = mes +1;
+        int dia = cal.get(Calendar.DAY_OF_MONTH);
+        return crearFechaString(dia, mes ,año);
+    }
+
+    public static String crearFechaString(int dia, int mes, int año){
+        String fecha = año+"-"+agregarDigito(mes)+"-"+agregarDigito(dia);
+        _Utils.FechaSeleccionada = fecha;
+        return fecha;
+    }
+
+    public static String agregarDigito(int digit){
+        if(digit<10)
+            return "0" + Integer.toString(digit);
+
+        return Integer.toString(digit);
     }
 
     public static void keyboardShow() {

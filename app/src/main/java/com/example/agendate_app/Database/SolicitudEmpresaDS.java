@@ -139,7 +139,7 @@ public class SolicitudEmpresaDS implements _SyncableGet{
 
     public boolean syncGet(_SyncableGet mSyncable) {
         syncable = mSyncable;
-        String urlIn = _WebServicesGet._elegirHorario+"/"+_Utils.getEmpresaSeleccionada().getEmpId()+"/"+_Utils.FechaSeleccionada;
+        String urlIn = _WebServicesGet._elegirHorario+"/"+_Utils.getEmpresaSeleccionada().getEmpId()+"/"+_Utils.getFechaSeleccionada();
         _WebServicesGet ws = new _WebServicesGet(urlIn, this, "SolicitudEmpresa");
         ws.execute();
         return true;
@@ -165,10 +165,9 @@ public class SolicitudEmpresaDS implements _SyncableGet{
                 if (syncable != null)
                     getSyncCallback().syncGetReturn(tag, out, sgr);
                 return true;
-            } else
-            {
-                return false;
             }
+            else
+                return false;
         }
 
 

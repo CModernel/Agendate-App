@@ -146,8 +146,45 @@ public class UsuarioDS implements _SyncableGet {
         return true;
     }
 
+    public boolean syncGetCheckLogin(_SyncableGet mSyncable) {
+        syncable = mSyncable;
+        String urlIn = _WebServicesGet._checkLogin +"/"+_Utils.Username+"/"+_Utils.Password;
+        _WebServicesGet ws = new _WebServicesGet(urlIn, this, "checkLogin");
+        ws.execute();
+        return true;
+    }
+
+    public boolean syncGetModificarDatos(_SyncableGet mSyncable) {
+        syncable = mSyncable;
+        Usuario usuario = new UsuarioDS().getAllUsuarios().get(0);
+
+        String nombre = "null";
+        if(usuario.getFirst_name() != null && !usuario.getFirst_name().isEmpty())
+            nombre = usuario.getFirst_name();
+
+        String apellido = "null";
+        if(usuario.getLast_name() != null && !usuario.getLast_name().isEmpty())
+            apellido = usuario.getLast_name();
+
+
+        String email  = "null";
+        if(usuario.getEmail() != null && !usuario.getEmail().isEmpty())
+            email = usuario.getEmail();
+
+        String urlIn = _WebServicesGet._modificarPerfil +"/"+_Utils.UsuId+"/"+nombre+"/"+apellido+"/"+email;
+        _WebServicesGet ws = new _WebServicesGet(urlIn, this, "modificarPerfil");
+        ws.execute();
+        return true;
+    }
+
     @Override
     public boolean syncGetReturn(String tag, String out, _SyncableGetResponse sgr) {
+
+        if(tag.equals("checkLogin") || tag.equals("modificarPerfil")){
+            if (syncable != null)
+                syncable.syncGetReturn(tag, out, sgr);
+            return true;
+        }
 
         ObjectMapper om = new ObjectMapper();
         om.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
@@ -155,6 +192,7 @@ public class UsuarioDS implements _SyncableGet {
         String out2 = "[" + out + "]";
         JsonNode cJson = null; // JSON de coleccion de objetos
         JsonNode oJson = null; // JSON de objeto
+
         try {
             cJson = om.readTree(out2);
             // si la coleccion es nula o de tamaño cero me voy

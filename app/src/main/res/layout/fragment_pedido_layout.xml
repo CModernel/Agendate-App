@@ -23,7 +23,7 @@
                 android:layout_height="40dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-
+                style="?android:spinnerStyle"
                 android:elevation="10dp"
                 android:fontFamily="sans-serif-condensed"
                 android:gravity="center"

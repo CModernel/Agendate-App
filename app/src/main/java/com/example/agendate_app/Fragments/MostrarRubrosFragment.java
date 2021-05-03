@@ -83,7 +83,7 @@ public class MostrarRubrosFragment extends Fragment implements _RVListener, _Syn
         super.onResume();
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         ActionBar actionBar = activity.getSupportActionBar();
-        actionBar.setTitle("Rubros");
+        actionBar.setTitle("Seleccione un Rubro");
     }
 
     @Override

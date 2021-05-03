@@ -25,9 +25,15 @@ public class _WebServicesGet extends AsyncTask<String, Void, String> {
     public static String _getEmpresas = "getAllEmpresasV1";
     public static String _elegirServicio = "elegirServicioV1";
     public static String _elegirHorario = "elegirHorarioV1";
-    public static String _verAgenda = "verAgendaV1";
+    //public static String _verAgenda = "verAgendaV1";
     public static String _verMiPerfil = "verMiPerfilV1";
     public static String _crearSolicitud = "crearSolicitudV1";
+    public static String _checkLogin = "checkLoginV1";
+    public static String _modificarPerfil = "modificarPerfilV1";
+    public static String _bajaSolicitud = "bajaSolicitudV1";
+
+    // V2
+    public static String _verAgenda = "verAgendaV2";
 
     private String urlIn = "http://agendate.pythonanywhere.com/api/";
 

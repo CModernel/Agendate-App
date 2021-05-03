@@ -1,5 +1,6 @@
 package com.example.agendate_app.Fragments;
 
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,15 +34,19 @@ import com.example.agendate_app.R;
 import com.example.agendate_app.Utils._Utils;
 import com.squareup.picasso.Picasso;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class MostrarSolicitudEmpresaFragment extends Fragment implements _RVListener, _SyncableGet {
     View mView, mEmptyView;
+    Button btnFecha;
+    DatePickerDialog datePickerDialog;
     RecyclerView mLista;
     RecyclerView.Adapter<?> mAdapter;
     LinearLayoutManager mLayoutManager;
     Bundle bundle;
     SolicitudEmpresa solicitudEmpresa;
+    _SyncableGet syncableGet = this;
 
     @Nullable
     @Override
@@ -50,10 +56,20 @@ public class MostrarSolicitudEmpresaFragment extends Fragment implements _RVList
 
         mEmptyView = mView.findViewById(R.id.fpl_llEmpty);
         mLista = mView.findViewById(R.id.listapedidos);
+        btnFecha = mView.findViewById(R.id.fpl_btnFecha);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mLista.setLayoutManager(mLayoutManager);
 
+        btnFecha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                abrirDatePicker();
+            }
+        });
+
+
         getBundle();
+        initDatePicker();
         build();
         setAdapterSolicitudEmpresa();
         _Utils.setAccionAtras(mView, new MostrarEmpresasFragment(), bundle);
@@ -83,8 +99,8 @@ public class MostrarSolicitudEmpresaFragment extends Fragment implements _RVList
             String urlImage = _Utils._URL_AGENDATE+_Utils._PATH_STATIC + _Utils.getEmpresaSeleccionada().getEmpImagen();
             Picasso.get().load(urlImage).into(ivfoto);
 
-            Button btnfecha = mView.findViewById(R.id.fpl_btnFecha);
-            btnfecha.setText("Fecha: " + _Utils.FechaSeleccionada);
+            btnFecha.setText("Fecha: " + _Utils.getFechaSeleccionada());
+
         }
     }
 
@@ -112,6 +128,31 @@ public class MostrarSolicitudEmpresaFragment extends Fragment implements _RVList
         }
     }
 
+    private void initDatePicker(){
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int año, int mes, int dia) {
+                mes = mes +1;
+                String fecha = _Utils.crearFechaString(dia, mes, año);
+                _Utils.setFechaSeleccionada(fecha);
+                btnFecha.setText("Fecha: " + fecha);
+                new SolicitudEmpresaDS().syncGet(syncableGet);
+            }
+        };
+
+        Calendar cal = Calendar.getInstance();
+        int año = cal.get(Calendar.YEAR);
+        int mes = cal.get(Calendar.MONTH);
+        int dia = cal.get(Calendar.DAY_OF_MONTH);
+
+        datePickerDialog = new DatePickerDialog(_Utils.getContext(), 0, dateSetListener, año, mes ,dia);
+    }
+
+
+    private void abrirDatePicker(){
+        datePickerDialog.show();
+
+    }
 
     public void getBundle(){
         bundle = getArguments();
@@ -137,7 +178,7 @@ public class MostrarSolicitudEmpresaFragment extends Fragment implements _RVList
         super.onResume();
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         ActionBar actionBar = activity.getSupportActionBar();
-        actionBar.setTitle("SolicitudEmpresa");
+        actionBar.setTitle("Seleccione horario de Agenda");
     }
 
     @Override

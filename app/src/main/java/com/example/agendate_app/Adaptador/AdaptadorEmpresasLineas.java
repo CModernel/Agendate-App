@@ -54,7 +54,7 @@ public class AdaptadorEmpresasLineas extends RecyclerView.Adapter<AdaptadorEmpre
             holder.Empresas = new EmpresasDS().getEmpresas(linea.getEmpId());
 
             //holder.dsc.setText(holder.Empresas.getEmpId().toString() + " - "+ holder.Empresas.getEmpRazonSocial());
-            holder.empId.setText(linea.getEmpId().toString());
+            holder.empNumTel.setText("Teléfono: " + linea.getEmpTelefono());
             String direccion = linea.getEmpDirCalle() + linea.getEmpDirNum();
             if(!linea.getEmpDirEsquina().isEmpty())
                 direccion += " Esq. " + linea.getEmpDirEsquina();
@@ -84,7 +84,7 @@ public class AdaptadorEmpresasLineas extends RecyclerView.Adapter<AdaptadorEmpre
         LinearLayout container;
 
         Empresas Empresas;
-        TextView empId, empNombre, empDireccion;
+        TextView empNumTel, empNombre, empDireccion;
         ImageView empImagen;
 
         public ViewHolder(View itemView) {
@@ -97,7 +97,8 @@ public class AdaptadorEmpresasLineas extends RecyclerView.Adapter<AdaptadorEmpre
             //dsc = itemView.findViewById(R.id.ic_dsc);
 
             empImagen = (ImageView) itemView.findViewById(R.id.ic_imagen_empresa);
-            empId = (TextView) itemView.findViewById(R.id.ic_txt_empid);
+            empNumTel = (TextView) itemView.findViewById(R.id.ic_txt_num_tel);
+
             empNombre = (TextView) itemView.findViewById(R.id.ic_txt_empnombre);
             empDireccion = (TextView) itemView.findViewById(R.id.ic_txt_empdireccion);
 

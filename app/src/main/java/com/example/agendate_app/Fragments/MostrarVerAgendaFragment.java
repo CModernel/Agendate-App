@@ -38,6 +38,7 @@ public class MostrarVerAgendaFragment extends Fragment implements _RVListener, _
     RecyclerView.Adapter<?> mAdapter;
     LinearLayoutManager mLayoutManager;
     Agenda mAgenda;
+    _SyncableGet syncableGet = this;
 
     @Nullable
     @Override
@@ -107,8 +108,7 @@ public class MostrarVerAgendaFragment extends Fragment implements _RVListener, _
                         // TODO
                         // Ejecutar WS para dar de baja la solicitud
                         new AgendaDS().bajaAgendaLocal(a.getId());
-                        // Refrescar Adaptador
-                        setAdapterVerAgenda();
+                        new AgendaDS().syncBajaSolicitud(syncableGet, a.getId());
                     }
                 });
                 dialogo1.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -130,6 +130,19 @@ public class MostrarVerAgendaFragment extends Fragment implements _RVListener, _
 
     @Override
     public boolean syncGetReturn(String tag, String out, _SyncableGetResponse sgr) {
+        // Si ya realizó la baja, traemos nuevamente la agenda syncronizada
+        if(tag.equals("bajaSolicitud")) {
+            if(out.contains("OK")){
+                _Utils.toast("Baja dada exitosamente.");
+                // Refrescar Adaptador
+                new AgendaDS().syncGet(syncableGet);
+            }else{
+                _Utils.toast("Ocurrio un error al dar de baja la solicitud.");
+            }
+        }else if(tag.equals("Agendas")){
+            _Utils.fragment(new MostrarVerAgendaFragment());
+        }
+
 /*
         if(mAgenda !=null) {
             if(new AgendaDS().getAllAgendas(mAgenda.getId()).size()>0) {

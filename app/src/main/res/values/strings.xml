@@ -12,6 +12,7 @@
     // Títulos para item_plantilla
     <string name="titulo_Rubro">Rubro:</string>
     <string name="titulo_Empresa">Empresa:</string>
+    <string name="titulo_Telefono">Teléfono:</string>
     <string name="titulo_Fecha">Fecha:</string>
     <string name="titulo_Hora">Hora:</string>
     <string name="btn_borrar">BtnBorrar</string>

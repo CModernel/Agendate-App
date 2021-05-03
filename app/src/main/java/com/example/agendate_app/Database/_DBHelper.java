@@ -7,7 +7,7 @@ import android.util.Log;
 
 public class _DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "com.kaizen.agendate.db";
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 8;
 
     public _DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -61,6 +61,9 @@ public class _DBHelper extends SQLiteOpenHelper {
             "UsuId INTEGER,"+
             "EmpId INTEGER,"+
             "UsuAdminResponsable INTEGER,"+
+            "EmpRazonSocial TEXT,"+
+            "EmpTelefono TEXT,"+
+            "EmpRubro1 TEXT,"+
             "PRIMARY KEY (id)" +
             ");";
 
