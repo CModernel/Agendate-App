@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-condensed"
                 android:gravity="center"
-                android:text="No hay pedidos ingresados por el momento." />
+                android:text="No hay turnos habilitados para la fecha seleccionada." />
 
         </LinearLayout>
 
