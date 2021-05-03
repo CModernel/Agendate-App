@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Agendate-App</string>
+    <string name="app_name">"@"gen-date</string>
     <string name="titulo_menu_inicio">Inicio</string>
     <string name="titulo_menu_carga">Carga</string>
     <string name="titulo_menu_descarga">Descarga</string>
@@ -8,4 +8,12 @@
     <string name="mf_txt_agendar_consulta">Agendar Consulta</string>
     <string name="mf_txt_ver_agenda">Ver Agenda</string>
     <string name="mf_txt_mi_perfil">Mi Perfil</string>
+
+    // Títulos para item_plantilla
+    <string name="titulo_Rubro">Rubro:</string>
+    <string name="titulo_Empresa">Empresa:</string>
+    <string name="titulo_Fecha">Fecha:</string>
+    <string name="titulo_Hora">Hora:</string>
+    <string name="btn_borrar">BtnBorrar</string>
+
 </resources>

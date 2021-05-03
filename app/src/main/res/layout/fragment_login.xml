@@ -26,7 +26,9 @@
         <ImageView
             android:id="@+id/frg_login_img_logo"
             android:layout_width="match_parent"
-            android:layout_height="150dp" />
+            android:layout_height="150dp"
+            android:src="@mipmap/ic_logo2_foreground"
+            android:contentDescription="Logo" />
     </LinearLayout>
 
     <LinearLayout
