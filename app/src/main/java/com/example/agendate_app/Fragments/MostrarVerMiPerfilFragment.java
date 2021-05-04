@@ -1,12 +1,10 @@
 package com.example.agendate_app.Fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -14,8 +12,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.example.agendate_app.Database.AgendaDS;
-import com.example.agendate_app.Database.RubroDS;
 import com.example.agendate_app.Database.Usuario;
 import com.example.agendate_app.Database.UsuarioDS;
 import com.example.agendate_app.Database._SyncableGetResponse;
@@ -40,11 +36,11 @@ public class MostrarVerMiPerfilFragment extends Fragment implements _SyncableGet
         // Inflate the layout for this fragment
         myView = inflater.inflate(R.layout.fragment_ver_mi_perfil_layout, container, false);
 
-        btnConfirmar = myView.findViewById(R.id.fcpl_btnConfirmar);
-        fcpl_username = (TextView) myView.findViewById(R.id.fcpl_username);
-        fcpl_first_name= (TextView) myView.findViewById(R.id.fcpl_first_name);
-        fcpl_last_name=(TextView)  myView.findViewById(R.id.fcpl_last_name);
-        fcpl_email= (TextView) myView.findViewById(R.id.fcpl_email);
+        btnConfirmar = myView.findViewById(R.id.fau_btnConfirmar);
+        fcpl_username = (TextView) myView.findViewById(R.id.fau_username);
+        fcpl_first_name= (TextView) myView.findViewById(R.id.fau_first_name);
+        fcpl_last_name=(TextView)  myView.findViewById(R.id.fau_last_name);
+        fcpl_email= (TextView) myView.findViewById(R.id.fau_email);
 
 
         btnConfirmar.setOnClickListener(new View.OnClickListener() {

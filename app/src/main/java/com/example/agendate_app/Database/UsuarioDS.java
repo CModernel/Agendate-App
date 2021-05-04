@@ -177,10 +177,27 @@ public class UsuarioDS implements _SyncableGet {
         return true;
     }
 
+//  username, email, password, first_name, last_name
+    public boolean syncRegistrarUsuario(_SyncableGet mSyncable, String username,
+                                        String email, String password, String first_name, String last_name) {
+        syncable = mSyncable;
+        String urlIn = _WebServicesGet._registrarUsuario +"/"+username+"/"+email+"/"+password+"/"+retornarIfNull(first_name)+"/"+retornarIfNull(last_name);
+        _WebServicesGet ws = new _WebServicesGet(urlIn, this, "registrarUsuario");
+        ws.execute();
+        return true;
+    }
+
+    public String retornarIfNull(String txt){
+        String retorno = "null";
+        if(txt!=null && !txt.isEmpty())
+            retorno = txt;
+        return retorno;
+    }
+
     @Override
     public boolean syncGetReturn(String tag, String out, _SyncableGetResponse sgr) {
 
-        if(tag.equals("checkLogin") || tag.equals("modificarPerfil")){
+        if(tag.equals("checkLogin") || tag.equals("modificarPerfil") || tag.equals("registrarUsuario")){
             if (syncable != null)
                 syncable.syncGetReturn(tag, out, sgr);
             return true;

@@ -22,7 +22,7 @@ import com.example.agendate_app.Utils._Utils;
 
 public class LoginFragment  extends Fragment implements _SyncableGet {
     View myView;
-    Button btn_Login;
+    Button btn_Login, btn_Registrarse;
     TextView usuario, password;
     private _SyncableGet syncableGet = this;
 
@@ -35,6 +35,7 @@ public class LoginFragment  extends Fragment implements _SyncableGet {
         btn_Login = (Button) myView.findViewById(R.id.frg_login_btn_enter);
         usuario = (TextView) myView.findViewById(R.id.frg_login_txt_usuario);
         password = (TextView) myView.findViewById(R.id.frg_login_txt_password);
+        btn_Registrarse = (Button) myView.findViewById(R.id.frg_registrarse_btn_enter);
 
         _DBHelper dbHelper = new _DBHelper(_Utils.getContext());
         SQLiteDatabase database = dbHelper.getWritableDatabase();
@@ -50,6 +51,12 @@ public class LoginFragment  extends Fragment implements _SyncableGet {
 
                     new UsuarioDS().syncGetCheckLogin(syncableGet);
                 }
+            }
+        });
+
+        btn_Registrarse.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                 _Utils.fragment(new AltaDeUsuario());
             }
         });
 

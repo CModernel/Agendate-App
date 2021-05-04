@@ -31,6 +31,7 @@ public class _WebServicesGet extends AsyncTask<String, Void, String> {
     public static String _checkLogin = "checkLoginV1";
     public static String _modificarPerfil = "modificarPerfilV1";
     public static String _bajaSolicitud = "bajaSolicitudV1";
+    public static String _registrarUsuario = "registrarUsuarioV1";
 
     // V2
     public static String _verAgenda = "verAgendaV2";

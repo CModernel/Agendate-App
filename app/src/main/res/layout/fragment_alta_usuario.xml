@@ -21,8 +21,8 @@
                 android:layout_height="wrap_content"
                 android:text="Usuario:" />
 
-            <TextView
-                android:id="@+id/fcpl_username"
+            <EditText
+                android:id="@+id/fau_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="40dp"
@@ -42,7 +42,7 @@
                 android:text="Email:" />
 
             <EditText
-                android:id="@+id/fcpl_email"
+                android:id="@+id/fau_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="40dp"
@@ -61,7 +61,7 @@
                 android:text="Nombre:" />
 
             <EditText
-                android:id="@+id/fcpl_first_name"
+                android:id="@+id/fau_first_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="40dp"
@@ -80,7 +80,7 @@
                 android:text="Apellido:" />
 
             <EditText
-                android:id="@+id/fcpl_last_name"
+                android:id="@+id/fau_last_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="40dp"
@@ -98,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:text="Contraseña:" />
             <EditText
-                android:id="@+id/frg_Alta_Usuario_txt_pass1"
+                android:id="@+id/fau_txt_pass1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="40dp"
@@ -115,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:text="Repetir contraseña:" />
             <EditText
-                android:id="@+id/frg_Alta_Usuario_txt_pass2"
+                android:id="@+id/fau_txt_pass2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="40dp"
@@ -129,12 +129,12 @@
 
 
             <Button
-                android:id="@+id/fcpl_btnConfirmar"
+                android:id="@+id/fau_btnConfirmar"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:background="@drawable/shapesquareblue"
-                android:text="registrarse"
+                android:text="Registrarse"
                 android:textColor="@color/white" />
 
         </LinearLayout>
