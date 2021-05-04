@@ -61,7 +61,7 @@
                     android:imeOptions="actionNext"
                     android:maxLines="1"
                     android:textSize="16sp"
-                    android:text="agendatetest"/>
+                    android:text=""/>
 
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
@@ -81,7 +81,7 @@
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:textSize="16sp"
-                android:text="prueba123"/>
+                android:text=""/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
