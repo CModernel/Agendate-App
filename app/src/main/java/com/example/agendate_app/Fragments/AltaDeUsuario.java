@@ -48,12 +48,12 @@ public class AltaDeUsuario extends Fragment implements _SyncableGet {
                 public void onClick(View view) {
                     String username = userName.getText().toString();
                     String name = inputName.getText().toString();
-                    String lastname = inputName.getText().toString();
+                    String lastname = inputLastName.getText().toString();
                     String email = inputEmail.getText().toString();
                     String password1 = inputPassword1.getText().toString();
                     String password2 = inputPassword2.getText().toString();
 
-                    if(!password2.equals(password2))
+                    if(!password1.equals(password2))
                         _Utils.toast("La constraseñas ingresadas deben ser iguales");
                     else
                         new UsuarioDS().syncRegistrarUsuario(syncableGet,username , email, password1 ,name, lastname);
